@@ -25,6 +25,7 @@ const query = /* GraphQL */ `
 const SchemaPage = () => {
   const [data, setData] = useState()
   const { getToken } = useAuth()
+  const { signOut } = useAuth()
 
   const fetchData = async () => {
     await fetch(process.env.NEXT_PUBLIC_GRAFBASE_API_URL as string, {
@@ -43,6 +44,7 @@ const SchemaPage = () => {
     <div>
       <button onClick={fetchData}>Fetch data</button>
       <pre>{JSON.stringify({ data }, null, 2)}</pre>
+      <button onClick={() => signOut()}>Sign Out</button>
     </div>
   )
 }

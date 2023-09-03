@@ -1,18 +1,16 @@
-import { SignedIn, SignedOut, useAuth } from '@clerk/nextjs'
+import { SignedIn, SignedOut } from '@clerk/nextjs'
 import type { NextPage } from 'next'
 import Link from 'next/link'
+import { Layout } from '../components/layout'
+import { VehicleSelector } from '../components/VehicleSelector'
 
 const Home: NextPage = () => {
-  const { signOut } = useAuth()
-
   return (
     <main>
       <SignedIn>
-        <p>
-          You have successfully signed in.{' '}
-          <Link href="/schema">Test the schema!</Link>
-        </p>
-        <button onClick={() => signOut()}>Sign Out</button>
+        <Layout title="Start Page">
+          <VehicleSelector />
+        </Layout>
       </SignedIn>
       <SignedOut>
         <p>Sign up for an account to get started</p>

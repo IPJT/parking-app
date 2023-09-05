@@ -2,21 +2,23 @@ import { UserButton } from '@clerk/nextjs'
 import Head from 'next/head'
 import Link from 'next/link'
 import styled from 'styled-components'
+import Image from 'next/image'
 
 export const Header = ({ title = 'Parking App' }: { title?: string }) => {
   return (
     <>
       <Head>
         <title>{title}</title>
-        <meta charSet="utf-8" />
-        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+        <meta charSet='utf-8' />
+        <meta name='viewport' content='initial-scale=1.0, width=device-width' />
       </Head>
       <header>
         <StyledNav>
-          <div>
-            <Link href="/">Home</Link> | <Link href="/cars">Your cars</Link>
-          </div>
-          <UserButton afterSignOutUrl="/" />
+          <Link href='/'>
+            <Image src='/logo.svg' alt='plus icon' width={40} height={40} />{' '}
+          </Link>
+
+          <UserButton afterSignOutUrl='/' />
         </StyledNav>
       </header>
     </>

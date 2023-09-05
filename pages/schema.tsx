@@ -1,5 +1,6 @@
 import { useAuth } from '@clerk/nextjs'
 import { useState } from 'react'
+import { Layout } from '../components/layout'
 
 const query = /* GraphQL */ `
   {
@@ -25,7 +26,6 @@ const query = /* GraphQL */ `
 const SchemaPage = () => {
   const [data, setData] = useState()
   const { getToken } = useAuth()
-  const { signOut } = useAuth()
 
   const fetchData = async () => {
     await fetch(process.env.NEXT_PUBLIC_GRAFBASE_API_URL as string, {
@@ -42,9 +42,10 @@ const SchemaPage = () => {
 
   return (
     <div>
-      <button onClick={fetchData}>Fetch data</button>
-      <pre>{JSON.stringify({ data }, null, 2)}</pre>
-      <button onClick={() => signOut()}>Sign Out</button>
+      <Layout>
+        <button onClick={fetchData}>Fetch data</button>
+        <pre>{JSON.stringify({ data }, null, 2)}</pre>
+      </Layout>
     </div>
   )
 }

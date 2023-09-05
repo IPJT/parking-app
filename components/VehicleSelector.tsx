@@ -26,7 +26,7 @@ const VehicleContainer = styled.div`
   padding: 1rem;
 `
 
-const PlusWrapper = styled.image`
+const PlusWrapper = styled.div`
   position: relative;
   top: 30%;
 `

@@ -5,10 +5,10 @@ import styled from 'styled-components'
 type Props = { children?: ReactNode; title?: string }
 
 export const Layout = ({ children, title }: Props) => (
-  <div>
+  <>
     <Header title={title} />
     <ContentWrapper>{children}</ContentWrapper>
-  </div>
+  </>
 )
 
 const ContentWrapper = styled.div`

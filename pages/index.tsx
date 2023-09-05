@@ -6,19 +6,9 @@ import { VehicleSelector } from '../components/VehicleSelector'
 
 const Home: NextPage = () => {
   return (
-    <main>
-      <SignedIn>
-        <Layout title="Start Page">
-          <VehicleSelector />
-        </Layout>
-      </SignedIn>
-      <SignedOut>
-        <p>Sign up for an account to get started</p>
-        <Link href="/sign-up">
-          <button>Sign Up</button>
-        </Link>
-      </SignedOut>
-    </main>
+    <Layout title="Parkering App">
+      <VehicleSelector />
+    </Layout>
   )
 }
 

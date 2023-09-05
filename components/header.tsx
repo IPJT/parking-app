@@ -31,4 +31,5 @@ const StyledNav = styled.nav`
   top: 0;
   padding: 1em 1.5rem;
   border-bottom: solid 1px rgba(255, 255, 255, 0.2);
+  min-height: 40px;
 `

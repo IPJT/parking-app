@@ -16,7 +16,7 @@ export const Header = ({ title = 'Parking App' }: { title?: string }) => {
           <div>
             <Link href="/">Home</Link> | <Link href="/cars">Your cars</Link>
           </div>
-          <UserButton afterSignOutUrl="/sign-in" />
+          <UserButton afterSignOutUrl="/" />
         </StyledNav>
       </header>
     </>

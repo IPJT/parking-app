@@ -3,7 +3,7 @@ import styled from 'styled-components'
 
 const SignInPage = () => (
   <CenterWrapper>
-    <SignIn path="/sign-in" routing="path" signUpUrl="/sign-up" />
+    <SignIn />
   </CenterWrapper>
 )
 

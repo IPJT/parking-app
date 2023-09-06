@@ -2,13 +2,13 @@ import { createGlobalStyle } from 'styled-components'
 
 export const GlobalStyle = createGlobalStyle`
     * {
-        font-family: ${(props) => props.theme.fontFamily};
-        margin: 0px;
-        
+        font-family: ${(props) => props.theme.fontFamily};        
     }
+    
     body {
         background-color: ${(props) => props.theme.colors.background};
         color: ${(props) => props.theme.colors.text};
+        margin: 0px;
     }
 
     button {

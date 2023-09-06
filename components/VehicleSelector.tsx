@@ -1,34 +1,70 @@
-import Image from 'next/image'
+import { useAuth, useUser } from '@clerk/nextjs'
+import { useEffect, useState } from 'react'
+import { VehicleAdder } from './VehicleAdder'
+import { Vehicle, VehicleCard } from './VehicleCard'
 import styled from 'styled-components'
 
 export const VehicleSelector = () => {
+  const [vehicles, setVehicles] = useState<Vehicle[]>([])
+  const { getToken } = useAuth()
+  const { user } = useUser()
+
+  const getVehiclesForUser = async (userId: string) => {
+    await fetch(process.env.NEXT_PUBLIC_GRAFBASE_API_URL as string, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        authorization: `Bearer ${await getToken({
+          template: 'grafbase',
+        })}`,
+      },
+      body: JSON.stringify({ query: getAllVehiclesForUser, variables: { userId } }),
+    }).then((res) =>
+      res.json().then(({ data }) => {
+        const vehicles: Vehicle[] = (data.carSearch.edges as { node: Vehicle }[]).reduce((acc, curr) => {
+          acc.push(curr.node)
+          return acc
+        }, [] as Vehicle[])
+        setVehicles(vehicles)
+      })
+    )
+  }
+
+  useEffect(() => {
+    if (user) {
+      getVehiclesForUser(user.id)
+    }
+  }, [user])
+
   return (
-    <div>
-      <VehicleContainer>
-        <PlusWrapper>
-          <Image src="/plus-solid.svg" alt="plus icon" width={70} height={70} />
-        </PlusWrapper>
-        <TextWrapper>Lägg till en ny bil</TextWrapper>
-      </VehicleContainer>
-    </div>
+    <CardContainer>
+      {vehicles.map((vehicle: Vehicle) => (
+        <VehicleCard vehicle={vehicle} key={vehicle.id} />
+      ))}
+
+      <VehicleAdder setVehicles={setVehicles} />
+    </CardContainer>
   )
 }
 
-const VehicleContainer = styled.div`
-  width: 300px;
-  height: 200px;
-  border-radius: 10px;
-  background-color: ${(props) => props.theme.colors.secondary};
+const CardContainer = styled.div`
   display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1rem;
+  flex-wrap: wrap;
+  gap: 1rem;
 `
 
-const PlusWrapper = styled.div`
-  position: relative;
-  top: 30%;
+const getAllVehiclesForUser = /* GraphQL */ `
+  query GetAllVehiclesForUser($userId: String!) {
+    carSearch(first: 10, filter: { owner: { eq: $userId } }) {
+      edges {
+        node {
+          name
+          brand
+          owner
+          status
+          id
+        }
+      }
+    }
+  }
 `
-
-const TextWrapper = styled.p``

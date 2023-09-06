@@ -2,14 +2,9 @@ schema @auth(providers: [{ type: oidc, issuer: "{{ env.CLERK_ISSUER_URL }}" }], 
   query: Query
 }
 
-type Post @model {
-  id: ID!
-  title: String!
-  comments: [Comment!]!
-}
-
-type Comment @model {
-  id: ID!
-  message: String!
-  post: Post!
+type Car @model @search {
+  name: String!
+  brand: String!
+  status: String!
+  owner: String
 }

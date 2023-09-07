@@ -55,7 +55,7 @@ const CardContainer = styled.div`
 
 const getAllVehiclesForUser = /* GraphQL */ `
   query GetAllVehiclesForUser($userId: String!) {
-    carSearch(first: 10, filter: { owner: { eq: $userId } }) {
+    carSearch(first: 100, filter: { owner: { eq: $userId } }) {
       edges {
         node {
           name

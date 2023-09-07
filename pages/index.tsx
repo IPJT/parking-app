@@ -1,12 +1,10 @@
-import { SignedIn, SignedOut } from '@clerk/nextjs'
 import type { NextPage } from 'next'
-import Link from 'next/link'
-import { Layout } from '../components/layout'
 import { VehicleSelector } from '../components/VehicleSelector'
+import { Layout } from '../components/layout'
 
 const Home: NextPage = () => {
   return (
-    <Layout title="Parkering App">
+    <Layout title='Parkering App'>
       <VehicleSelector />
     </Layout>
   )

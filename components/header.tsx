@@ -31,7 +31,7 @@ const StyledNav = styled.nav`
   align-items: center;
   position: relative;
   top: 0;
-  padding: 1em 1.5rem;
+  padding: 1rem 1rem;
   border-bottom: solid 1px rgba(255, 255, 255, 0.2);
   min-height: 40px;
 `

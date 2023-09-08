@@ -148,7 +148,7 @@ const PlusWrapper = styled.div`
 `
 
 const addVehicleForUserQuery = /* GraphQL */ `
-  mutation CarCreate($owner: String!, $name: String!, $status: String!, $brand: String!) {
+  mutation AddVehicleForUserQuery($owner: String!, $name: String!, $status: String!, $brand: String!) {
     carCreate(input: { owner: $owner, name: $name, status: $status, brand: $brand }) {
       car {
         name

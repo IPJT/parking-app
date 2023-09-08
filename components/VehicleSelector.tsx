@@ -6,11 +6,10 @@ import styled from 'styled-components'
 
 export const VehicleSelector = () => {
   const [vehicles, setVehicles] = useState<Vehicle[]>([])
-  const { getToken } = useAuth()
-  const { user } = useUser()
+  const { getToken, userId } = useAuth()
 
   const getVehiclesForUser = async (userId: string) => {
-    await fetch(process.env.NEXT_PUBLIC_GRAFBASE_API_URL as string, {
+    fetch(process.env.NEXT_PUBLIC_GRAFBASE_API_URL as string, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -19,22 +18,22 @@ export const VehicleSelector = () => {
         })}`,
       },
       body: JSON.stringify({ query: getAllVehiclesForUser, variables: { userId } }),
-    }).then((res) =>
-      res.json().then(({ data }) => {
+    })
+      .then((res) => res.json())
+      .then(({ data }) => {
         const vehicles: Vehicle[] = (data.carSearch.edges as { node: Vehicle }[]).reduce((acc, curr) => {
           acc.push(curr.node)
           return acc
         }, [] as Vehicle[])
         setVehicles(vehicles)
       })
-    )
   }
 
   useEffect(() => {
-    if (user) {
-      getVehiclesForUser(user.id)
+    if (userId) {
+      getVehiclesForUser(userId)
     }
-  }, [user])
+  }, [userId])
 
   return (
     <CardContainer>

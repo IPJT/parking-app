@@ -1,83 +1,40 @@
-import Image from 'next/image'
-import { Dispatch, FormEventHandler, SetStateAction, useState } from 'react'
-import styled from 'styled-components'
-import { GenericCard, Vehicle } from './VehicleCard'
+import { useMutation } from '@apollo/client'
 import { useAuth } from '@clerk/nextjs'
+import Image from 'next/image'
+import { Dispatch, SetStateAction, useEffect, useState } from 'react'
+import styled from 'styled-components'
+import { graphql } from '../__generated__'
+import { GenericCard } from './VehicleCard'
+import { GET_CARS_FOR_USER } from './VehicleSelector'
 
-export const VehicleAdder = ({ setVehicles }: { setVehicles: Dispatch<SetStateAction<Vehicle[]>> }) => {
+export const VehicleAdder = () => {
   const [isExpanded, setIsExpanded] = useState(false)
 
-  return isExpanded ? (
-    <VehicleAdderForm setIsExpanded={setIsExpanded} setVehicles={setVehicles} />
-  ) : (
-    <AddButton setIsExpanded={setIsExpanded} />
-  )
+  return isExpanded ? <VehicleAdderForm setIsExpanded={setIsExpanded} /> : <AddButton setIsExpanded={setIsExpanded} />
 }
 
-const VehicleAdderForm = ({
-  setIsExpanded,
-  setVehicles,
-}: {
-  setIsExpanded: Dispatch<SetStateAction<boolean>>
-  setVehicles: Dispatch<SetStateAction<Vehicle[]>>
-}) => {
-  const [isLoading, setIsLoading] = useState(false)
-  const [error, setError] = useState<string | null>(null)
-  const { getToken, userId } = useAuth()
+const VehicleAdderForm = ({ setIsExpanded }: { setIsExpanded: Dispatch<SetStateAction<boolean>> }) => {
+  const { userId } = useAuth()
+  const [addCar, { loading, error }] = useMutation(ADD_CAR_FOR_USER, {
+    refetchQueries: [GET_CARS_FOR_USER],
+  })
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault() // Prevent the browser from reloading the page
-    setIsLoading(true)
-    setError(null)
 
-    try {
-      const formData = new FormData(event.currentTarget)
+    const formData = new FormData(event.currentTarget)
 
-      const jsonData = Object.fromEntries(formData.entries())
+    const jsonData = Object.fromEntries(formData.entries())
 
-      const vehicle = {
-        owner: userId,
-        name: jsonData['car-name'],
-        status: 'Pending',
-        brand: jsonData['car-brand'],
-      }
-
-      const response = await fetch(process.env.NEXT_PUBLIC_GRAFBASE_API_URL as string, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          authorization: `Bearer ${await getToken({
-            template: 'grafbase',
-          })}`,
-        },
-        body: JSON.stringify({
-          query: addVehicleForUserQuery,
-          variables: { owner: vehicle.owner, name: vehicle.name, status: vehicle.status, brand: vehicle.brand },
-        }),
-      })
-
-      if (!response.ok) {
-        throw new Error('Failed to submit the data. Please try again.')
-      }
-
-      const { data } = await response.json()
-
-      const newVehicle = data.carCreate.car as Vehicle
-
-      setVehicles((vehicles) => {
-        const vehiclesCopy = [...vehicles]
-        vehiclesCopy.push(newVehicle)
-        return vehiclesCopy
-      })
-    } catch (error) {
-      if (error instanceof Error) {
-        setError(error.message)
-      }
-
-      console.error(error)
-    } finally {
-      setIsLoading(false) // Set loading to false when the request completes
+    const vehicle = {
+      owner: userId as string,
+      name: jsonData['car-name'] as string,
+      status: 'Pending',
+      brand: jsonData['car-brand'] as string,
     }
+
+    await addCar({ variables: { ...vehicle } })
+    setIsExpanded(false)
   }
 
   return (
@@ -96,10 +53,10 @@ const VehicleAdderForm = ({
         </label>
       </InputWrapper>
 
-      {error && <StyledError>{error}</StyledError>}
+      {error && <StyledError>{error.message}</StyledError>}
       <ButtonWrapper>
         <button onClick={() => setIsExpanded(false)}>Tillbaka</button>
-        <button type='submit'>{isLoading ? 'Loading...' : 'Submit'}</button>
+        <button type='submit'>{loading ? 'Loading...' : 'Submit'}</button>
       </ButtonWrapper>
     </StyledForm>
   )
@@ -147,15 +104,12 @@ const PlusWrapper = styled.div`
   top: 25%;
 `
 
-const addVehicleForUserQuery = /* GraphQL */ `
+const ADD_CAR_FOR_USER = graphql(/* GraphQL */ `
   mutation AddVehicleForUserQuery($owner: String!, $name: String!, $status: String!, $brand: String!) {
     carCreate(input: { owner: $owner, name: $name, status: $status, brand: $brand }) {
       car {
-        name
-        brand
-        status
         id
       }
     }
   }
-`
+`)

@@ -1,47 +1,42 @@
-import { useAuth, useUser } from '@clerk/nextjs'
-import { useEffect, useState } from 'react'
-import { VehicleAdder } from './VehicleAdder'
-import { Vehicle, VehicleCard } from './VehicleCard'
+import { useQuery } from '@apollo/client'
+import { useAuth } from '@clerk/nextjs'
+import { useState } from 'react'
 import styled from 'styled-components'
+import { graphql } from '../__generated__'
+import { Car } from '../__generated__/graphql'
+import { VehicleAdder } from './VehicleAdder'
+import { VehicleCard } from './VehicleCard'
 
 export const VehicleSelector = () => {
-  const [vehicles, setVehicles] = useState<Vehicle[]>([])
-  const { getToken, userId } = useAuth()
+  const { userId } = useAuth()
+  const { error, loading, data } = useQuery(GET_CARS_FOR_USER, {
+    variables: { first: 100, owner: userId as string },
+    skip: !userId,
+  })
 
-  const getVehiclesForUser = async (userId: string) => {
-    fetch(process.env.NEXT_PUBLIC_GRAFBASE_API_URL as string, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        authorization: `Bearer ${await getToken({
-          template: 'grafbase',
-        })}`,
-      },
-      body: JSON.stringify({ query: getAllVehiclesForUser, variables: { userId } }),
-    })
-      .then((res) => res.json())
-      .then(({ data }) => {
-        const vehicles: Vehicle[] = (data.carSearch.edges as { node: Vehicle }[]).reduce((acc, curr) => {
-          acc.push(curr.node)
-          return acc
-        }, [] as Vehicle[])
-        setVehicles(vehicles)
-      })
+  if (loading || !userId) {
+    return <p>loading</p>
   }
 
-  useEffect(() => {
-    if (userId) {
-      getVehiclesForUser(userId)
+  if (error) {
+    return <p>{error.message}</p>
+  }
+
+  const cars = (data?.carSearch?.edges ?? []).reduce((acc, curr) => {
+    if (!curr) {
+      return acc
     }
-  }, [userId])
+    acc.push(curr.node)
+    return acc
+  }, [] as Car[])
 
   return (
     <CardContainer>
-      {vehicles.map((vehicle: Vehicle) => (
+      {cars.map((vehicle) => (
         <VehicleCard vehicle={vehicle} key={vehicle.id} />
       ))}
 
-      <VehicleAdder setVehicles={setVehicles} />
+      <VehicleAdder />
     </CardContainer>
   )
 }
@@ -52,9 +47,9 @@ const CardContainer = styled.div`
   gap: 1rem;
 `
 
-const getAllVehiclesForUser = /* GraphQL */ `
-  query GetAllVehiclesForUser($userId: String!) {
-    carSearch(first: 100, filter: { owner: { eq: $userId } }) {
+export const GET_CARS_FOR_USER = graphql(/* GraphQL */ `
+  query GetAllVehiclesForUser($first: Int!, $owner: String!) {
+    carSearch(first: $first, filter: { owner: { eq: $owner } }) {
       edges {
         node {
           name
@@ -62,8 +57,10 @@ const getAllVehiclesForUser = /* GraphQL */ `
           owner
           status
           id
+          createdAt
+          updatedAt
         }
       }
     }
   }
-`
+`)

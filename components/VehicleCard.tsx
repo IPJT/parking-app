@@ -1,16 +1,8 @@
 import Image from 'next/image'
-import { Dispatch, SetStateAction } from 'react'
 import styled from 'styled-components'
+import { Car } from '../__generated__/graphql'
 
-export type Vehicle = {
-  id: string
-  name: string
-  brand: string
-  status: string
-  owner?: string
-}
-
-export const VehicleCard = ({ vehicle }: { vehicle: Vehicle }) => {
+export const VehicleCard = ({ vehicle }: { vehicle: Car }) => {
   return (
     <GenericCard $borderColor={`${vehicle.status === 'Pending' ? 'orange' : 'none'}`}>
       <p>{vehicle.name}</p>

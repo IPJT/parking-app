@@ -15,7 +15,7 @@ export const Header = ({ title = 'Parking App' }: { title?: string }) => {
       <header>
         <StyledNav>
           <Link href='/'>
-            <Image src='/logo.svg' alt='plus icon' width={40} height={40} />{' '}
+            <Image src='/logo.png' alt='plus icon' width={40} height={40} />{' '}
           </Link>
 
           <UserButton afterSignOutUrl='/' />

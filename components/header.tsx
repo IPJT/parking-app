@@ -1,10 +1,18 @@
-import { UserButton } from '@clerk/nextjs'
+import { OrganizationSwitcher, UserButton, useOrganization, useOrganizationList } from '@clerk/nextjs'
 import Head from 'next/head'
 import Link from 'next/link'
 import styled from 'styled-components'
 import Image from 'next/image'
 
 export const Header = ({ title = 'Parking App' }: { title?: string }) => {
+  const { userMemberships } = useOrganizationList({
+    userMemberships: {
+      infinite: true,
+    },
+  })
+
+  const { membership } = useOrganization()
+
   return (
     <>
       <Head>
@@ -14,9 +22,14 @@ export const Header = ({ title = 'Parking App' }: { title?: string }) => {
       </Head>
       <header>
         <StyledNav>
-          <Link href='/'>
-            <Image src='/logo.png' alt='plus icon' width={40} height={40} />{' '}
-          </Link>
+          <StyledDiv>
+            <Link href='/'>
+              <Image src='/logo.png' alt='plus icon' width={40} height={40} />{' '}
+            </Link>
+            {membership?.role === 'admin' && <Link href='/admin'>Admin Page</Link>}
+          </StyledDiv>
+
+          {(userMemberships?.count ?? 0) > 0 && <OrganizationSwitcher />}
 
           <UserButton afterSignOutUrl='/' />
         </StyledNav>
@@ -24,6 +37,12 @@ export const Header = ({ title = 'Parking App' }: { title?: string }) => {
     </>
   )
 }
+
+const StyledDiv = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+`
 
 const StyledNav = styled.nav`
   display: flex;

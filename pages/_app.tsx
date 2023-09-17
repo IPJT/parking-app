@@ -5,7 +5,7 @@ import { ApolloProviderWrapper } from '../ApolloProviderWrapper'
 import { GlobalStyle } from '../styles/global-style'
 import { theme } from '../styles/theme'
 
-function MyApp({ Component, pageProps, router }: AppProps) {
+function MyApp({ Component, pageProps }: AppProps) {
   return (
     <ThemeProvider theme={theme}>
       <GlobalStyle />

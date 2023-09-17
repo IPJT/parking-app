@@ -1,6 +1,7 @@
 import Image from 'next/image'
 import styled from 'styled-components'
 import { Car } from '../__generated__/graphql'
+import { theme } from '../styles/theme'
 
 export const VehicleCard = ({ vehicle }: { vehicle: Car }) => {
   return (
@@ -16,9 +17,9 @@ export const GenericCard = styled.div<{ $borderColor?: string }>`
   max-width: 300px;
   min-width: 300px;
   height: 200px;
-  border: ${(props) => (props.$borderColor === 'orange' ? 'orange 2px solid' : 'unset')};
+  border: ${(props) => (props.$borderColor === 'orange' ? `${theme.colors.semantics.warning} 2px solid` : 'unset')};
   border-radius: 10px;
-  background-color: ${(props) => props.theme.colors.secondary};
+  background-color: ${(props) => props.theme.colors.scheme.darkAccent};
   display: flex;
   flex-direction: column;
   justify-content: space-between;

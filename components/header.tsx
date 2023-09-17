@@ -3,6 +3,7 @@ import Head from 'next/head'
 import Link from 'next/link'
 import styled from 'styled-components'
 import Image from 'next/image'
+import { theme } from '../styles/theme'
 
 export const Header = ({ title = 'Parking App' }: { title?: string }) => {
   const { userMemberships } = useOrganizationList({
@@ -51,6 +52,6 @@ const StyledNav = styled.nav`
   position: relative;
   top: 0;
   padding: 1rem 1rem;
-  border-bottom: solid 1px rgba(255, 255, 255, 0.2);
+  border-bottom: solid 1px ${theme.colors.scheme.darkAccent};
   min-height: 40px;
 `

@@ -6,8 +6,8 @@ export const GlobalStyle = createGlobalStyle`
     }
     
     body {
-        background-color: ${(props) => props.theme.colors.background};
-        color: ${(props) => props.theme.colors.text};
+        background-color: ${(props) => props.theme.colors.scheme.darkShades};
+        color: ${(props) => props.theme.colors.scheme.lightShades};
         margin: 0px;
     }
 
@@ -17,7 +17,7 @@ export const GlobalStyle = createGlobalStyle`
 
     a {
         text-decoration: none;
-        color: ${(props) => props.theme.colors.text};
+        color: ${(props) => props.theme.colors.scheme.lightShades};
     }
 
     a:hover {

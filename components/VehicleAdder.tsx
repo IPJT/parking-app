@@ -6,6 +6,7 @@ import styled from 'styled-components'
 import { graphql } from '../__generated__'
 import { GenericCard } from './VehicleCard'
 import { GET_CARS_FOR_USER } from './VehicleSelector'
+import { Button } from './Button'
 
 export const VehicleAdder = () => {
   const [isExpanded, setIsExpanded] = useState(false)
@@ -55,23 +56,31 @@ const VehicleAdderForm = ({ setIsExpanded }: { setIsExpanded: Dispatch<SetStateA
 
       {error && <StyledError>{error.message}</StyledError>}
       <ButtonWrapper>
-        <button onClick={() => setIsExpanded(false)}>Tillbaka</button>
-        <button type='submit'>{loading ? 'Loading...' : 'Submit'}</button>
+        <Button variant='secondary' onClick={() => setIsExpanded(false)}>
+          Tillbaka
+        </Button>
+        <GrowingButton variant='primary' type='submit'>
+          {loading ? 'Loading...' : 'Lägg till'}
+        </GrowingButton>
       </ButtonWrapper>
     </StyledForm>
   )
 }
+
+const GrowingButton = styled(Button)`
+  flex-grow: 1;
+`
 
 const StyledError = styled.p`
   color: red;
 `
 
 const StyledForm = styled.form`
-  max-width: 300px;
+  width: 300px;
   height: 200px;
   padding: 1rem;
   border-radius: 10px;
-  background-color: ${(props) => props.theme.colors.secondary};
+  background-color: ${(props) => props.theme.colors.scheme.darkAccent};
   display: flex;
   flex-direction: column;
   justify-content: space-between;

@@ -1,6 +1,7 @@
 import * as ToggleGroup from '@radix-ui/react-toggle-group'
 import { Dispatch, SetStateAction } from 'react'
 import styled from 'styled-components'
+import { theme } from '../../styles/theme'
 
 type Props<T extends string> = {
   toggleStateList: readonly T[]
@@ -20,7 +21,9 @@ export function Toggle<T extends string>({ toggleStateList, selectedToggleItem, 
       }}
     >
       {toggleStateList.map((toggleItem) => (
-        <StyledToggleGroupItem value={toggleItem}>{toggleItem} </StyledToggleGroupItem>
+        <StyledToggleGroupItem key={toggleItem} value={toggleItem}>
+          {toggleItem}
+        </StyledToggleGroupItem>
       ))}
     </StyledToggleGroupRoot>
   )
@@ -28,15 +31,14 @@ export function Toggle<T extends string>({ toggleStateList, selectedToggleItem, 
 
 const StyledToggleGroupRoot = styled(ToggleGroup.Root)`
   display: inline-flex;
-  background-color: white;
+  background-color: ${theme.colors.grey};
   border-radius: 4px;
-  box-shadow: 0 2px 10px black;
   width: fit-content;
 `
 
 const StyledToggleGroupItem = styled(ToggleGroup.Item)`
-  background-color: white;
-  color: black;
+  background-color: ${theme.colors.grey};
+  color: ${theme.colors.scheme.lightShades};
   height: 35px;
   padding: 0px 10px;
   display: flex;
@@ -58,12 +60,6 @@ const StyledToggleGroupItem = styled(ToggleGroup.Item)`
   }
 
   &[data-state='on'] {
-    background-color: red;
-    color: white;
-  }
-
-  &:focus {
-    position: relative;
-    box-shadow: 0 0 0 2px black;
+    background-color: ${theme.colors.scheme.mainBrand};
   }
 `

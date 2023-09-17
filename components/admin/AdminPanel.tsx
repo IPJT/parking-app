@@ -18,7 +18,7 @@ export const AdminPanel = () => {
           selectedToggleItem={selectedToggleItem}
           setSelectedToggleItem={setSelectedToggleItem}
         />
-        <p>hej</p>
+        <p>{selectedToggleItem}</p>
       </AdminPanelContainer>
     </Page>
   )

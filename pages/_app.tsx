@@ -1,9 +1,9 @@
-import { ClerkLoaded, ClerkProvider, SignedIn, SignedOut, RedirectToSignIn } from '@clerk/nextjs'
+import { ClerkProvider } from '@clerk/nextjs'
 import type { AppProps } from 'next/app'
 import { ThemeProvider } from 'styled-components'
-import { theme } from '../styles/theme'
-import { GlobalStyle } from '../styles/global-style'
 import { ApolloProviderWrapper } from '../ApolloProviderWrapper'
+import { GlobalStyle } from '../styles/global-style'
+import { theme } from '../styles/theme'
 
 function MyApp({ Component, pageProps, router }: AppProps) {
   return (

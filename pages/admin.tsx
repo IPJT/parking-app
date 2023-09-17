@@ -1,6 +1,6 @@
-import { useOrganization } from '@clerk/nextjs'
 import { getAuth } from '@clerk/nextjs/server'
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next'
+import { AdminPanel } from '../components/admin/AdminPanel'
 
 const AdminPage = ({ orgRole }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const isAdmin = orgRole === 'admin'
@@ -9,7 +9,7 @@ const AdminPage = ({ orgRole }: InferGetServerSidePropsType<typeof getServerSide
     return <>This page is for admins only</>
   }
 
-  return <>Välkommen till admin-sidan</>
+  return <AdminPanel />
 }
 
 export const getServerSideProps = (async (context) => {

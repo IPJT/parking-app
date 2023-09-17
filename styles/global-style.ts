@@ -12,7 +12,7 @@ export const GlobalStyle = createGlobalStyle`
     }
 
     button {
-        background-color: ${(props) => props.theme.colors.secondary};
+        all: unset
     }
 
     a {

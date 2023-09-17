@@ -1,6 +1,5 @@
 import { useQuery } from '@apollo/client'
 import { useAuth } from '@clerk/nextjs'
-import { useState } from 'react'
 import styled from 'styled-components'
 import { graphql } from '../__generated__'
 import { Car } from '../__generated__/graphql'

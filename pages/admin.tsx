@@ -24,7 +24,11 @@ const AdminPage = ({ orgRole }: InferGetServerSidePropsType<typeof getServerSide
 export const getServerSideProps = (async (context) => {
   const { orgRole } = getAuth(context.req)
 
-  return { props: { orgRole: orgRole ?? null } }
+  if (!orgRole) {
+    return { props: { orgRole: null } }
+  }
+
+  return { props: { orgRole } }
 }) satisfies GetServerSideProps<{
   orgRole: string | null
 }>

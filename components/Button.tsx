@@ -23,6 +23,7 @@ const handleColorType = (color: ButtonTypes) => {
 }
 
 const StyledButton = styled.button<{ $variant: ButtonTypes }>`
+  all: unset;
   color: ${(props) => props.theme.colors.scheme.lightShades};
   text-align: center;
   background-color: ${(props) => handleColorType(props.$variant)};

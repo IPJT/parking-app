@@ -37,6 +37,7 @@ const StyledToggleGroupRoot = styled(ToggleGroup.Root)`
 `
 
 const StyledToggleGroupItem = styled(ToggleGroup.Item)`
+  all: unset;
   background-color: ${theme.colors.grey};
   color: ${theme.colors.scheme.lightShades};
   height: 35px;

@@ -11,10 +11,6 @@ export const GlobalStyle = createGlobalStyle`
         margin: 0px;
     }
 
-    button {
-        all: unset
-    }
-
     a {
         text-decoration: none;
         color: ${(props) => props.theme.colors.scheme.lightShades};

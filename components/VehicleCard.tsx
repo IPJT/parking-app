@@ -1,9 +1,15 @@
 import Image from 'next/image'
 import styled from 'styled-components'
-import { Car } from '../__generated__/graphql'
 import { theme } from '../styles/theme'
+import { FragmentType, graphql, useFragment } from '../__generated__'
 
-export const VehicleCard = ({ vehicle }: { vehicle: Car }) => {
+type Props = {
+  vehicle: FragmentType<typeof VehicleCard_VehicleFragment>
+}
+
+export const VehicleCard = (props: Props) => {
+  const vehicle = useFragment(VehicleCard_VehicleFragment, props.vehicle)
+
   return (
     <GenericCard $borderColor={`${vehicle.status === 'Pending' ? 'orange' : 'none'}`}>
       <p>{vehicle.name}</p>
@@ -12,6 +18,14 @@ export const VehicleCard = ({ vehicle }: { vehicle: Car }) => {
     </GenericCard>
   )
 }
+
+const VehicleCard_VehicleFragment = graphql(/* GraphQL */ `
+  fragment VehicleCard_VehicleFragment on Vehicle {
+    name
+    brand
+    status
+  }
+`)
 
 export const GenericCard = styled.div<{ $borderColor?: string }>`
   max-width: 300px;

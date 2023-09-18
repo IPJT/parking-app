@@ -1,12 +1,12 @@
 import { useMutation } from '@apollo/client'
 import { useAuth } from '@clerk/nextjs'
 import Image from 'next/image'
-import { Dispatch, SetStateAction, useEffect, useState } from 'react'
+import { Dispatch, SetStateAction, useState } from 'react'
 import styled from 'styled-components'
 import { graphql } from '../__generated__'
-import { GenericCard } from './VehicleCard'
-import { GET_CARS_FOR_USER } from './VehicleSelector'
 import { Button } from './Button'
+import { GenericCard } from './VehicleCard'
+import { VechicleSelector_Query } from './VehicleSelector'
 
 export const VehicleAdder = () => {
   const [isExpanded, setIsExpanded] = useState(false)
@@ -16,8 +16,8 @@ export const VehicleAdder = () => {
 
 const VehicleAdderForm = ({ setIsExpanded }: { setIsExpanded: Dispatch<SetStateAction<boolean>> }) => {
   const { userId } = useAuth()
-  const [addCar, { loading, error }] = useMutation(ADD_CAR_FOR_USER, {
-    refetchQueries: [GET_CARS_FOR_USER],
+  const [addCar, { loading, error }] = useMutation(VehicleAdder_Mutation, {
+    refetchQueries: [VechicleSelector_Query],
   })
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
@@ -113,10 +113,10 @@ const PlusWrapper = styled.div`
   top: 25%;
 `
 
-const ADD_CAR_FOR_USER = graphql(/* GraphQL */ `
-  mutation AddVehicleForUserQuery($owner: String!, $name: String!, $status: String!, $brand: String!) {
-    carCreate(input: { owner: $owner, name: $name, status: $status, brand: $brand }) {
-      car {
+const VehicleAdder_Mutation = graphql(/* GraphQL */ `
+  mutation VehicleAdder_Mutation($owner: String!, $name: String!, $status: String!, $brand: String!) {
+    vehicleCreate(input: { owner: $owner, name: $name, status: $status, brand: $brand }) {
+      vehicle {
         id
       }
     }

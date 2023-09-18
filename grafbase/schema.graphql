@@ -2,7 +2,7 @@ schema @auth(providers: [{ type: oidc, issuer: "{{ env.CLERK_ISSUER_URL }}" }], 
   query: Query
 }
 
-type Car @model @search {
+type Vehicle @model @search {
   name: String!
   brand: String!
   status: String!

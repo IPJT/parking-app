@@ -13,8 +13,11 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
  * Therefore it is highly recommended to use the babel or swc plugin for production.
  */
 const documents = {
-    "\n  mutation AddVehicleForUserQuery($owner: String!, $name: String!, $status: String!, $brand: String!) {\n    carCreate(input: { owner: $owner, name: $name, status: $status, brand: $brand }) {\n      car {\n        id\n      }\n    }\n  }\n": types.AddVehicleForUserQueryDocument,
-    "\n  query GetAllVehiclesForUser($first: Int!, $owner: String!) {\n    carSearch(first: $first, filter: { owner: { eq: $owner } }) {\n      edges {\n        node {\n          name\n          brand\n          owner\n          status\n          id\n          createdAt\n          updatedAt\n        }\n      }\n    }\n  }\n": types.GetAllVehiclesForUserDocument,
+    "\n  mutation VehicleAdder_Mutation($owner: String!, $name: String!, $status: String!, $brand: String!) {\n    vehicleCreate(input: { owner: $owner, name: $name, status: $status, brand: $brand }) {\n      vehicle {\n        id\n      }\n    }\n  }\n": types.VehicleAdder_MutationDocument,
+    "\n  fragment VehicleCard_VehicleFragment on Vehicle {\n    name\n    brand\n    status\n  }\n": types.VehicleCard_VehicleFragmentFragmentDoc,
+    "\n  query VechicleSelector_Query($first: Int!, $owner: String!) {\n    vehicleSearch(first: $first, filter: { owner: { eq: $owner } }) {\n      edges {\n        node {\n          ...VehicleCard_VehicleFragment\n          id\n        }\n      }\n    }\n  }\n": types.VechicleSelector_QueryDocument,
+    "\n  fragment AdminVehicleItem_VehicleFragment on Vehicle {\n    name\n    brand\n    status\n    owner\n  }\n": types.AdminVehicleItem_VehicleFragmentFragmentDoc,
+    "\n  query GetAllVehicles($first: Int!, $after: String) {\n    vehicleSearch(first: $first, after: $after) {\n      edges {\n        node {\n          ...AdminVehicleItem_VehicleFragment\n        }\n      }\n      searchInfo {\n        totalHits\n      }\n      pageInfo {\n        endCursor\n        hasNextPage\n      }\n    }\n  }\n": types.GetAllVehiclesDocument,
 };
 
 /**
@@ -34,11 +37,23 @@ export function graphql(source: string): unknown;
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "\n  mutation AddVehicleForUserQuery($owner: String!, $name: String!, $status: String!, $brand: String!) {\n    carCreate(input: { owner: $owner, name: $name, status: $status, brand: $brand }) {\n      car {\n        id\n      }\n    }\n  }\n"): (typeof documents)["\n  mutation AddVehicleForUserQuery($owner: String!, $name: String!, $status: String!, $brand: String!) {\n    carCreate(input: { owner: $owner, name: $name, status: $status, brand: $brand }) {\n      car {\n        id\n      }\n    }\n  }\n"];
+export function graphql(source: "\n  mutation VehicleAdder_Mutation($owner: String!, $name: String!, $status: String!, $brand: String!) {\n    vehicleCreate(input: { owner: $owner, name: $name, status: $status, brand: $brand }) {\n      vehicle {\n        id\n      }\n    }\n  }\n"): (typeof documents)["\n  mutation VehicleAdder_Mutation($owner: String!, $name: String!, $status: String!, $brand: String!) {\n    vehicleCreate(input: { owner: $owner, name: $name, status: $status, brand: $brand }) {\n      vehicle {\n        id\n      }\n    }\n  }\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "\n  query GetAllVehiclesForUser($first: Int!, $owner: String!) {\n    carSearch(first: $first, filter: { owner: { eq: $owner } }) {\n      edges {\n        node {\n          name\n          brand\n          owner\n          status\n          id\n          createdAt\n          updatedAt\n        }\n      }\n    }\n  }\n"): (typeof documents)["\n  query GetAllVehiclesForUser($first: Int!, $owner: String!) {\n    carSearch(first: $first, filter: { owner: { eq: $owner } }) {\n      edges {\n        node {\n          name\n          brand\n          owner\n          status\n          id\n          createdAt\n          updatedAt\n        }\n      }\n    }\n  }\n"];
+export function graphql(source: "\n  fragment VehicleCard_VehicleFragment on Vehicle {\n    name\n    brand\n    status\n  }\n"): (typeof documents)["\n  fragment VehicleCard_VehicleFragment on Vehicle {\n    name\n    brand\n    status\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n  query VechicleSelector_Query($first: Int!, $owner: String!) {\n    vehicleSearch(first: $first, filter: { owner: { eq: $owner } }) {\n      edges {\n        node {\n          ...VehicleCard_VehicleFragment\n          id\n        }\n      }\n    }\n  }\n"): (typeof documents)["\n  query VechicleSelector_Query($first: Int!, $owner: String!) {\n    vehicleSearch(first: $first, filter: { owner: { eq: $owner } }) {\n      edges {\n        node {\n          ...VehicleCard_VehicleFragment\n          id\n        }\n      }\n    }\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n  fragment AdminVehicleItem_VehicleFragment on Vehicle {\n    name\n    brand\n    status\n    owner\n  }\n"): (typeof documents)["\n  fragment AdminVehicleItem_VehicleFragment on Vehicle {\n    name\n    brand\n    status\n    owner\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n  query GetAllVehicles($first: Int!, $after: String) {\n    vehicleSearch(first: $first, after: $after) {\n      edges {\n        node {\n          ...AdminVehicleItem_VehicleFragment\n        }\n      }\n      searchInfo {\n        totalHits\n      }\n      pageInfo {\n        endCursor\n        hasNextPage\n      }\n    }\n  }\n"): (typeof documents)["\n  query GetAllVehicles($first: Int!, $after: String) {\n    vehicleSearch(first: $first, after: $after) {\n      edges {\n        node {\n          ...AdminVehicleItem_VehicleFragment\n        }\n      }\n      searchInfo {\n        totalHits\n      }\n      pageInfo {\n        endCursor\n        hasNextPage\n      }\n    }\n  }\n"];
 
 export function graphql(source: string) {
   return (documents as any)[source] ?? {};

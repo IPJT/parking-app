@@ -32,131 +32,6 @@ export type Scalars = {
   DateTime: { input: any; output: any; }
 };
 
-export type Car = {
-  __typename?: 'Car';
-  brand: Scalars['String']['output'];
-  /** when the model was created */
-  createdAt: Scalars['DateTime']['output'];
-  /** Unique identifier */
-  id: Scalars['ID']['output'];
-  name: Scalars['String']['output'];
-  owner?: Maybe<Scalars['String']['output']>;
-  status: Scalars['String']['output'];
-  /** when the model was updated */
-  updatedAt: Scalars['DateTime']['output'];
-};
-
-export type CarByInput = {
-  id?: InputMaybe<Scalars['ID']['input']>;
-};
-
-export type CarCollectionFilterInput = {
-  id?: InputMaybe<IdCollectionFilterInput>;
-};
-
-export type CarConnection = {
-  __typename?: 'CarConnection';
-  edges?: Maybe<Array<Maybe<CarEdge>>>;
-  /** Information to aid in pagination */
-  pageInfo: PageInfo;
-};
-
-/** Input to create a Car */
-export type CarCreateInput = {
-  brand: Scalars['String']['input'];
-  name: Scalars['String']['input'];
-  owner?: InputMaybe<Scalars['String']['input']>;
-  status: Scalars['String']['input'];
-};
-
-export type CarCreateManyInput = {
-  input: CarCreateInput;
-};
-
-export type CarCreateManyPayload = {
-  __typename?: 'CarCreateManyPayload';
-  carCollection: Array<Car>;
-};
-
-export type CarCreatePayload = {
-  __typename?: 'CarCreatePayload';
-  car?: Maybe<Car>;
-};
-
-export type CarDeleteManyInput = {
-  by: CarByInput;
-};
-
-export type CarDeleteManyPayload = {
-  __typename?: 'CarDeleteManyPayload';
-  deletedIds: Array<Scalars['ID']['output']>;
-};
-
-export type CarDeletePayload = {
-  __typename?: 'CarDeletePayload';
-  deletedId: Scalars['ID']['output'];
-};
-
-export type CarEdge = {
-  __typename?: 'CarEdge';
-  cursor: Scalars['String']['output'];
-  node: Car;
-};
-
-export type CarOrderByInput = {
-  createdAt?: InputMaybe<OrderByDirection>;
-};
-
-export type CarSearchConnection = {
-  __typename?: 'CarSearchConnection';
-  edges: Array<CarSearchEdge>;
-  pageInfo: PageInfo;
-  searchInfo?: Maybe<SearchInfo>;
-};
-
-export type CarSearchEdge = {
-  __typename?: 'CarSearchEdge';
-  cursor: Scalars['String']['output'];
-  node: Car;
-  score: Scalars['Float']['output'];
-};
-
-export type CarSearchFilterInput = {
-  ALL?: InputMaybe<Array<CarSearchFilterInput>>;
-  ANY?: InputMaybe<Array<CarSearchFilterInput>>;
-  NONE?: InputMaybe<Array<CarSearchFilterInput>>;
-  NOT?: InputMaybe<CarSearchFilterInput>;
-  brand?: InputMaybe<StringSearchFilterInput>;
-  createdAt?: InputMaybe<DateTimeSearchFilterInput>;
-  name?: InputMaybe<StringSearchFilterInput>;
-  owner?: InputMaybe<StringOrNullSearchFilterInput>;
-  status?: InputMaybe<StringSearchFilterInput>;
-  updatedAt?: InputMaybe<DateTimeSearchFilterInput>;
-};
-
-/** Input to update a Car */
-export type CarUpdateInput = {
-  brand?: InputMaybe<Scalars['String']['input']>;
-  name?: InputMaybe<Scalars['String']['input']>;
-  owner?: InputMaybe<Scalars['String']['input']>;
-  status?: InputMaybe<Scalars['String']['input']>;
-};
-
-export type CarUpdateManyInput = {
-  by: CarByInput;
-  input: CarUpdateInput;
-};
-
-export type CarUpdateManyPayload = {
-  __typename?: 'CarUpdateManyPayload';
-  carCollection: Array<Car>;
-};
-
-export type CarUpdatePayload = {
-  __typename?: 'CarUpdatePayload';
-  car?: Maybe<Car>;
-};
-
 export type DateTimeSearchFilterInput = {
   ALL?: InputMaybe<Array<DateTimeSearchFilterInput>>;
   ANY?: InputMaybe<Array<DateTimeSearchFilterInput>>;
@@ -178,49 +53,49 @@ export type IdCollectionFilterInput = {
 
 export type Mutation = {
   __typename?: 'Mutation';
-  /** Create a Car */
-  carCreate?: Maybe<CarCreatePayload>;
-  /** Create multiple Car */
-  carCreateMany?: Maybe<CarCreateManyPayload>;
-  /** Delete a Car by ID or unique field */
-  carDelete?: Maybe<CarDeletePayload>;
-  /** Delete multiple Car */
-  carDeleteMany?: Maybe<CarDeleteManyPayload>;
-  /** Update a Car */
-  carUpdate?: Maybe<CarUpdatePayload>;
-  /** Update multiple Car */
-  carUpdateMany?: Maybe<CarUpdateManyPayload>;
+  /** Create a Vehicle */
+  vehicleCreate?: Maybe<VehicleCreatePayload>;
+  /** Create multiple Vehicle */
+  vehicleCreateMany?: Maybe<VehicleCreateManyPayload>;
+  /** Delete a Vehicle by ID or unique field */
+  vehicleDelete?: Maybe<VehicleDeletePayload>;
+  /** Delete multiple Vehicle */
+  vehicleDeleteMany?: Maybe<VehicleDeleteManyPayload>;
+  /** Update a Vehicle */
+  vehicleUpdate?: Maybe<VehicleUpdatePayload>;
+  /** Update multiple Vehicle */
+  vehicleUpdateMany?: Maybe<VehicleUpdateManyPayload>;
 };
 
 
-export type MutationCarCreateArgs = {
-  input: CarCreateInput;
+export type MutationVehicleCreateArgs = {
+  input: VehicleCreateInput;
 };
 
 
-export type MutationCarCreateManyArgs = {
-  input: Array<CarCreateManyInput>;
+export type MutationVehicleCreateManyArgs = {
+  input: Array<VehicleCreateManyInput>;
 };
 
 
-export type MutationCarDeleteArgs = {
-  by: CarByInput;
+export type MutationVehicleDeleteArgs = {
+  by: VehicleByInput;
 };
 
 
-export type MutationCarDeleteManyArgs = {
-  input: Array<CarDeleteManyInput>;
+export type MutationVehicleDeleteManyArgs = {
+  input: Array<VehicleDeleteManyInput>;
 };
 
 
-export type MutationCarUpdateArgs = {
-  by: CarByInput;
-  input: CarUpdateInput;
+export type MutationVehicleUpdateArgs = {
+  by: VehicleByInput;
+  input: VehicleUpdateInput;
 };
 
 
-export type MutationCarUpdateManyArgs = {
-  input: Array<CarUpdateManyInput>;
+export type MutationVehicleUpdateManyArgs = {
+  input: Array<VehicleUpdateManyInput>;
 };
 
 export enum OrderByDirection {
@@ -238,35 +113,35 @@ export type PageInfo = {
 
 export type Query = {
   __typename?: 'Query';
-  /** Query a single Car by an ID or a unique field */
-  car?: Maybe<Car>;
-  /** Paginated query to fetch the whole list of `Car`. */
-  carCollection?: Maybe<CarConnection>;
-  /** Search `Car` */
-  carSearch?: Maybe<CarSearchConnection>;
+  /** Query a single Vehicle by an ID or a unique field */
+  vehicle?: Maybe<Vehicle>;
+  /** Paginated query to fetch the whole list of `Vehicle`. */
+  vehicleCollection?: Maybe<VehicleConnection>;
+  /** Search `Vehicle` */
+  vehicleSearch?: Maybe<VehicleSearchConnection>;
 };
 
 
-export type QueryCarArgs = {
-  by: CarByInput;
+export type QueryVehicleArgs = {
+  by: VehicleByInput;
 };
 
 
-export type QueryCarCollectionArgs = {
+export type QueryVehicleCollectionArgs = {
   after?: InputMaybe<Scalars['String']['input']>;
   before?: InputMaybe<Scalars['String']['input']>;
-  filter?: InputMaybe<CarCollectionFilterInput>;
+  filter?: InputMaybe<VehicleCollectionFilterInput>;
   first?: InputMaybe<Scalars['Int']['input']>;
   last?: InputMaybe<Scalars['Int']['input']>;
-  orderBy?: InputMaybe<CarOrderByInput>;
+  orderBy?: InputMaybe<VehicleOrderByInput>;
 };
 
 
-export type QueryCarSearchArgs = {
+export type QueryVehicleSearchArgs = {
   after?: InputMaybe<Scalars['String']['input']>;
   before?: InputMaybe<Scalars['String']['input']>;
   fields?: InputMaybe<Array<Scalars['String']['input']>>;
-  filter?: InputMaybe<CarSearchFilterInput>;
+  filter?: InputMaybe<VehicleSearchFilterInput>;
   first?: InputMaybe<Scalars['Int']['input']>;
   last?: InputMaybe<Scalars['Int']['input']>;
   query?: InputMaybe<Scalars['String']['input']>;
@@ -310,7 +185,132 @@ export type StringSearchFilterInput = {
   regex?: InputMaybe<Scalars['String']['input']>;
 };
 
-export type AddVehicleForUserQueryMutationVariables = Exact<{
+export type Vehicle = {
+  __typename?: 'Vehicle';
+  brand: Scalars['String']['output'];
+  /** when the model was created */
+  createdAt: Scalars['DateTime']['output'];
+  /** Unique identifier */
+  id: Scalars['ID']['output'];
+  name: Scalars['String']['output'];
+  owner?: Maybe<Scalars['String']['output']>;
+  status: Scalars['String']['output'];
+  /** when the model was updated */
+  updatedAt: Scalars['DateTime']['output'];
+};
+
+export type VehicleByInput = {
+  id?: InputMaybe<Scalars['ID']['input']>;
+};
+
+export type VehicleCollectionFilterInput = {
+  id?: InputMaybe<IdCollectionFilterInput>;
+};
+
+export type VehicleConnection = {
+  __typename?: 'VehicleConnection';
+  edges?: Maybe<Array<Maybe<VehicleEdge>>>;
+  /** Information to aid in pagination */
+  pageInfo: PageInfo;
+};
+
+/** Input to create a Vehicle */
+export type VehicleCreateInput = {
+  brand: Scalars['String']['input'];
+  name: Scalars['String']['input'];
+  owner?: InputMaybe<Scalars['String']['input']>;
+  status: Scalars['String']['input'];
+};
+
+export type VehicleCreateManyInput = {
+  input: VehicleCreateInput;
+};
+
+export type VehicleCreateManyPayload = {
+  __typename?: 'VehicleCreateManyPayload';
+  vehicleCollection: Array<Vehicle>;
+};
+
+export type VehicleCreatePayload = {
+  __typename?: 'VehicleCreatePayload';
+  vehicle?: Maybe<Vehicle>;
+};
+
+export type VehicleDeleteManyInput = {
+  by: VehicleByInput;
+};
+
+export type VehicleDeleteManyPayload = {
+  __typename?: 'VehicleDeleteManyPayload';
+  deletedIds: Array<Scalars['ID']['output']>;
+};
+
+export type VehicleDeletePayload = {
+  __typename?: 'VehicleDeletePayload';
+  deletedId: Scalars['ID']['output'];
+};
+
+export type VehicleEdge = {
+  __typename?: 'VehicleEdge';
+  cursor: Scalars['String']['output'];
+  node: Vehicle;
+};
+
+export type VehicleOrderByInput = {
+  createdAt?: InputMaybe<OrderByDirection>;
+};
+
+export type VehicleSearchConnection = {
+  __typename?: 'VehicleSearchConnection';
+  edges: Array<VehicleSearchEdge>;
+  pageInfo: PageInfo;
+  searchInfo?: Maybe<SearchInfo>;
+};
+
+export type VehicleSearchEdge = {
+  __typename?: 'VehicleSearchEdge';
+  cursor: Scalars['String']['output'];
+  node: Vehicle;
+  score: Scalars['Float']['output'];
+};
+
+export type VehicleSearchFilterInput = {
+  ALL?: InputMaybe<Array<VehicleSearchFilterInput>>;
+  ANY?: InputMaybe<Array<VehicleSearchFilterInput>>;
+  NONE?: InputMaybe<Array<VehicleSearchFilterInput>>;
+  NOT?: InputMaybe<VehicleSearchFilterInput>;
+  brand?: InputMaybe<StringSearchFilterInput>;
+  createdAt?: InputMaybe<DateTimeSearchFilterInput>;
+  name?: InputMaybe<StringSearchFilterInput>;
+  owner?: InputMaybe<StringOrNullSearchFilterInput>;
+  status?: InputMaybe<StringSearchFilterInput>;
+  updatedAt?: InputMaybe<DateTimeSearchFilterInput>;
+};
+
+/** Input to update a Vehicle */
+export type VehicleUpdateInput = {
+  brand?: InputMaybe<Scalars['String']['input']>;
+  name?: InputMaybe<Scalars['String']['input']>;
+  owner?: InputMaybe<Scalars['String']['input']>;
+  status?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type VehicleUpdateManyInput = {
+  by: VehicleByInput;
+  input: VehicleUpdateInput;
+};
+
+export type VehicleUpdateManyPayload = {
+  __typename?: 'VehicleUpdateManyPayload';
+  vehicleCollection: Array<Vehicle>;
+};
+
+export type VehicleUpdatePayload = {
+  __typename?: 'VehicleUpdatePayload';
+  vehicle?: Maybe<Vehicle>;
+};
+
+export type VehicleAdder_MutationMutationVariables = Exact<{
   owner: Scalars['String']['input'];
   name: Scalars['String']['input'];
   status: Scalars['String']['input'];
@@ -318,16 +318,36 @@ export type AddVehicleForUserQueryMutationVariables = Exact<{
 }>;
 
 
-export type AddVehicleForUserQueryMutation = { __typename?: 'Mutation', carCreate?: { __typename?: 'CarCreatePayload', car?: { __typename?: 'Car', id: string } | null } | null };
+export type VehicleAdder_MutationMutation = { __typename?: 'Mutation', vehicleCreate?: { __typename?: 'VehicleCreatePayload', vehicle?: { __typename?: 'Vehicle', id: string } | null } | null };
 
-export type GetAllVehiclesForUserQueryVariables = Exact<{
+export type VehicleCard_VehicleFragmentFragment = { __typename?: 'Vehicle', name: string, brand: string, status: string } & { ' $fragmentName'?: 'VehicleCard_VehicleFragmentFragment' };
+
+export type VechicleSelector_QueryQueryVariables = Exact<{
   first: Scalars['Int']['input'];
   owner: Scalars['String']['input'];
 }>;
 
 
-export type GetAllVehiclesForUserQuery = { __typename?: 'Query', carSearch?: { __typename?: 'CarSearchConnection', edges: Array<{ __typename?: 'CarSearchEdge', node: { __typename?: 'Car', name: string, brand: string, owner?: string | null, status: string, id: string, createdAt: any, updatedAt: any } }> } | null };
+export type VechicleSelector_QueryQuery = { __typename?: 'Query', vehicleSearch?: { __typename?: 'VehicleSearchConnection', edges: Array<{ __typename?: 'VehicleSearchEdge', node: (
+        { __typename?: 'Vehicle', id: string }
+        & { ' $fragmentRefs'?: { 'VehicleCard_VehicleFragmentFragment': VehicleCard_VehicleFragmentFragment } }
+      ) }> } | null };
+
+export type AdminVehicleItem_VehicleFragmentFragment = { __typename?: 'Vehicle', name: string, brand: string, status: string, owner?: string | null } & { ' $fragmentName'?: 'AdminVehicleItem_VehicleFragmentFragment' };
+
+export type GetAllVehiclesQueryVariables = Exact<{
+  first: Scalars['Int']['input'];
+  after?: InputMaybe<Scalars['String']['input']>;
+}>;
 
 
-export const AddVehicleForUserQueryDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"AddVehicleForUserQuery"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"owner"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"name"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"status"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"brand"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"carCreate"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"owner"},"value":{"kind":"Variable","name":{"kind":"Name","value":"owner"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"name"},"value":{"kind":"Variable","name":{"kind":"Name","value":"name"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"status"},"value":{"kind":"Variable","name":{"kind":"Name","value":"status"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"brand"},"value":{"kind":"Variable","name":{"kind":"Name","value":"brand"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"car"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]}}]} as unknown as DocumentNode<AddVehicleForUserQueryMutation, AddVehicleForUserQueryMutationVariables>;
-export const GetAllVehiclesForUserDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetAllVehiclesForUser"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"first"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"owner"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"carSearch"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"first"},"value":{"kind":"Variable","name":{"kind":"Name","value":"first"}}},{"kind":"Argument","name":{"kind":"Name","value":"filter"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"owner"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"owner"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"brand"}},{"kind":"Field","name":{"kind":"Name","value":"owner"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetAllVehiclesForUserQuery, GetAllVehiclesForUserQueryVariables>;
+export type GetAllVehiclesQuery = { __typename?: 'Query', vehicleSearch?: { __typename?: 'VehicleSearchConnection', edges: Array<{ __typename?: 'VehicleSearchEdge', node: (
+        { __typename?: 'Vehicle' }
+        & { ' $fragmentRefs'?: { 'AdminVehicleItem_VehicleFragmentFragment': AdminVehicleItem_VehicleFragmentFragment } }
+      ) }>, searchInfo?: { __typename?: 'SearchInfo', totalHits: number } | null, pageInfo: { __typename?: 'PageInfo', endCursor?: string | null, hasNextPage: boolean } } | null };
+
+export const VehicleCard_VehicleFragmentFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"VehicleCard_VehicleFragment"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Vehicle"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"brand"}},{"kind":"Field","name":{"kind":"Name","value":"status"}}]}}]} as unknown as DocumentNode<VehicleCard_VehicleFragmentFragment, unknown>;
+export const AdminVehicleItem_VehicleFragmentFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"AdminVehicleItem_VehicleFragment"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Vehicle"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"brand"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"owner"}}]}}]} as unknown as DocumentNode<AdminVehicleItem_VehicleFragmentFragment, unknown>;
+export const VehicleAdder_MutationDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"VehicleAdder_Mutation"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"owner"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"name"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"status"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"brand"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"vehicleCreate"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"owner"},"value":{"kind":"Variable","name":{"kind":"Name","value":"owner"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"name"},"value":{"kind":"Variable","name":{"kind":"Name","value":"name"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"status"},"value":{"kind":"Variable","name":{"kind":"Name","value":"status"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"brand"},"value":{"kind":"Variable","name":{"kind":"Name","value":"brand"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"vehicle"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]}}]} as unknown as DocumentNode<VehicleAdder_MutationMutation, VehicleAdder_MutationMutationVariables>;
+export const VechicleSelector_QueryDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"VechicleSelector_Query"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"first"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"owner"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"vehicleSearch"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"first"},"value":{"kind":"Variable","name":{"kind":"Name","value":"first"}}},{"kind":"Argument","name":{"kind":"Name","value":"filter"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"owner"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"owner"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"VehicleCard_VehicleFragment"}},{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"VehicleCard_VehicleFragment"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Vehicle"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"brand"}},{"kind":"Field","name":{"kind":"Name","value":"status"}}]}}]} as unknown as DocumentNode<VechicleSelector_QueryQuery, VechicleSelector_QueryQueryVariables>;
+export const GetAllVehiclesDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetAllVehicles"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"first"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"after"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"vehicleSearch"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"first"},"value":{"kind":"Variable","name":{"kind":"Name","value":"first"}}},{"kind":"Argument","name":{"kind":"Name","value":"after"},"value":{"kind":"Variable","name":{"kind":"Name","value":"after"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"AdminVehicleItem_VehicleFragment"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"searchInfo"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"totalHits"}}]}},{"kind":"Field","name":{"kind":"Name","value":"pageInfo"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"endCursor"}},{"kind":"Field","name":{"kind":"Name","value":"hasNextPage"}}]}}]}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"AdminVehicleItem_VehicleFragment"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Vehicle"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"brand"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"owner"}}]}}]} as unknown as DocumentNode<GetAllVehiclesQuery, GetAllVehiclesQueryVariables>;

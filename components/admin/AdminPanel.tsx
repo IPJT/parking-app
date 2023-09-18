@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Toggle as ToggleGroup } from './ToggleGroup'
 import styled from 'styled-components'
+import { AdminVehicleList } from './AdminVehicleList'
 
 const TOGGLE_STATE_LIST = ['Users', 'Vehicles'] as const
 
@@ -18,7 +19,8 @@ export const AdminPanel = () => {
           selectedToggleItem={selectedToggleItem}
           setSelectedToggleItem={setSelectedToggleItem}
         />
-        <p>{selectedToggleItem}</p>
+        {selectedToggleItem === 'Users' && <p>Users</p>}
+        {selectedToggleItem === 'Vehicles' && <AdminVehicleList />}
       </AdminPanelContainer>
     </Page>
   )

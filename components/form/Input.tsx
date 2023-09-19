@@ -1,22 +1,46 @@
 import styled from 'styled-components'
 import { theme } from '../../styles/theme'
-import { FieldValue, FieldValues, Path, UseFormRegister } from 'react-hook-form'
+import { FieldErrors, FieldValue, FieldValues, Path, RegisterOptions, UseFormRegister } from 'react-hook-form'
 
 type InputProps<T extends FieldValues> = {
   label: Path<T>
   register: UseFormRegister<T>
-  required: boolean
+  validationRules?: RegisterOptions<T>
   labelStrings?: { [Key in keyof T]: string }
+  errors: FieldErrors<T>
 }
 
-export const Input = <T extends FieldValues>({ label, register, required, labelStrings }: InputProps<T>) => {
+export const Input = <T extends FieldValues>({
+  label,
+  register,
+  validationRules,
+  labelStrings,
+  errors,
+}: InputProps<T>) => {
+  const errorMessage = errors[label]?.message as string | undefined
+
   return (
     <LabelInputContainer>
-      <StyledLabel htmlFor={label}>{labelStrings ? labelStrings[label] : label}</StyledLabel>
-      <StyledInput id={label} {...register(label, { required })} />
+      <StyledDiv>
+        <StyledLabel htmlFor={label}>{labelStrings ? labelStrings[label] : label}</StyledLabel>
+        {errorMessage && <StyledErrorMessage>{errorMessage}</StyledErrorMessage>}
+      </StyledDiv>
+      <StyledInput id={label} {...register(label, validationRules)} />
     </LabelInputContainer>
   )
 }
+
+const StyledErrorMessage = styled.span`
+  font-size: 13px;
+  color: ${theme.colors.semantics.danger};
+`
+
+const StyledDiv = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  flex-wrap: wrap;
+`
 
 export const LabelInputContainer = styled.div`
   display: flex;

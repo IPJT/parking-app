@@ -1,11 +1,14 @@
 import { Dispatch, SetStateAction } from 'react'
 import { graphql } from '../../__generated__'
-import { VehicleBrandEnum } from '../../utils/enums'
+import { VehicleBrandEnum, VehicleStatusEnum } from '../../utils/enums'
 import { Button } from '../form/Button'
 import styled from 'styled-components'
 import { Input } from '../form/Input'
 import { Select } from '../form/Select'
 import { SubmitHandler, useForm } from 'react-hook-form'
+import { useMutation } from '@apollo/client'
+import { useAuth } from '@clerk/nextjs'
+import { VechicleSelector_Query } from './VehicleSelector'
 
 export interface IVehicleAdderFormValues {
   Name: string
@@ -18,21 +21,48 @@ const LABEL_STRINGS: { [Key in keyof IVehicleAdderFormValues]: string } = {
 }
 
 export const VehicleAdderForm = ({ setIsExpanded }: { setIsExpanded: Dispatch<SetStateAction<boolean>> }) => {
-  const { register, handleSubmit } = useForm<IVehicleAdderFormValues>()
+  const { userId } = useAuth()
+  const [addVehicle, { loading }] = useMutation(VehicleAdder_Mutation, { refetchQueries: [VechicleSelector_Query] })
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<IVehicleAdderFormValues>()
 
-  const onSubmit: SubmitHandler<IVehicleAdderFormValues> = (data) => {
-    console.log(data)
+  const onSubmit: SubmitHandler<IVehicleAdderFormValues> = async (data) => {
+    if (!userId) {
+      throw new Error('No userID was found') //TODO-ian. Hur hanterar man detta på bästa sätt?
+    }
+    await addVehicle({
+      variables: { name: data.Name, brand: data.Brand, status: VehicleStatusEnum.pending, owner: userId },
+    })
+    setIsExpanded(false)
   }
 
   return (
     <StyledForm onSubmit={handleSubmit(onSubmit)}>
       <div>
-        <Input<IVehicleAdderFormValues> label='Name' required={true} register={register} labelStrings={LABEL_STRINGS} />
+        <Input<IVehicleAdderFormValues>
+          label='Name'
+          register={register}
+          validationRules={{
+            required: { value: true, message: 'Ange ett namn för bilen' },
+            minLength: { value: 5, message: 'Bilens namn måste vara minst 5 tecken långt' },
+          }}
+          labelStrings={LABEL_STRINGS}
+          errors={errors}
+        />
+
         <Select<IVehicleAdderFormValues>
           label='Brand'
           options={Object.values(VehicleBrandEnum)}
           register={register}
           labelStrings={LABEL_STRINGS}
+          validationRules={{
+            validate: (value) =>
+              Object.values(VehicleBrandEnum).includes(value as VehicleBrandEnum) || 'Välj ett bilmärke',
+          }}
+          errors={errors}
         />
       </div>
       <ButtonWrapper>
@@ -40,7 +70,7 @@ export const VehicleAdderForm = ({ setIsExpanded }: { setIsExpanded: Dispatch<Se
           Tillbaka
         </Button>
         <GrowingButton variant='primary' type='submit'>
-          Sök
+          {loading ? 'Laddar...' : 'Lägg till'}
         </GrowingButton>
       </ButtonWrapper>
     </StyledForm>

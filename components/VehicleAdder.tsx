@@ -56,10 +56,10 @@ const VehicleAdderForm = ({ setIsExpanded }: { setIsExpanded: Dispatch<SetStateA
 
       {error && <StyledError>{error.message}</StyledError>}
       <ButtonWrapper>
-        <Button variant='secondary' onClick={() => setIsExpanded(false)}>
+        <Button $variant='secondary' onClick={() => setIsExpanded(false)}>
           Tillbaka
         </Button>
-        <GrowingButton variant='primary' type='submit'>
+        <GrowingButton $variant='primary' type='submit'>
           {loading ? 'Loading...' : 'Lägg till'}
         </GrowingButton>
       </ButtonWrapper>
@@ -67,7 +67,7 @@ const VehicleAdderForm = ({ setIsExpanded }: { setIsExpanded: Dispatch<SetStateA
   )
 }
 
-const GrowingButton = styled(Button)`
+export const GrowingButton = styled(Button)`
   flex-grow: 1;
 `
 
@@ -92,7 +92,8 @@ const InputWrapper = styled.div`
   row-gap: 20px;
 `
 
-const ButtonWrapper = styled.div`
+export const ButtonWrapper = styled.div`
+  margin-top: 1.5rem;
   display: flex;
   column-gap: 10px;
 `

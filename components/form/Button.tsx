@@ -5,11 +5,12 @@ import { theme } from '../../styles/theme'
 type ButtonTypes = 'primary' | 'secondary'
 
 interface Props extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  $variant: ButtonTypes
+  variant: ButtonTypes
 }
 
 export const Button = React.forwardRef<HTMLButtonElement, Props>((props: Props, forwardedRef) => {
-  return <StyledButton {...props} ref={forwardedRef} />
+  const { variant, ...otherProps } = props
+  return <StyledButton $variant={variant} {...otherProps} ref={forwardedRef} />
 })
 
 const handleColorType = (color: ButtonTypes) => {

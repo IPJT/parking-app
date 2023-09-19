@@ -54,10 +54,10 @@ export const AdminVehicleListSearchForm = ({
         <Input<IAdminVehicleListSearchFormValues> label='Owner' required={false} register={register} />
       </div>
       <ButtonWrapper>
-        <Button $variant='secondary' onClick={() => setIsModalOpen(false)}>
+        <Button variant='secondary' onClick={() => setIsModalOpen(false)}>
           Tillbaka
         </Button>
-        <GrowingButton $variant='primary' type='submit'>
+        <GrowingButton variant='primary' type='submit'>
           Sök
         </GrowingButton>
       </ButtonWrapper>

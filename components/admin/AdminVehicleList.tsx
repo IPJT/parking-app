@@ -67,7 +67,7 @@ export const AdminVehicleList = () => {
       <div>
         {data?.vehicleSearch?.pageInfo.hasNextPage && (
           <Button
-            $variant='primary'
+            variant='primary'
             onClick={() =>
               fetchMore({
                 variables: {

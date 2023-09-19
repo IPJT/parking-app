@@ -1,8 +1,8 @@
 import { useQuery } from '@apollo/client'
 import { useAuth } from '@clerk/nextjs'
 import styled from 'styled-components'
-import { graphql } from '../__generated__'
-import { VehicleAdder } from './VehicleAdder'
+import { graphql } from '../../__generated__'
+import { VehicleAdderCard } from './VehicleAdderCard'
 import { VehicleCard } from './VehicleCard'
 
 export const VehicleSelector = () => {
@@ -27,7 +27,7 @@ export const VehicleSelector = () => {
         return <VehicleCard vehicle={vehicle} key={vehicle.id} />
       })}
 
-      <VehicleAdder />
+      <VehicleAdderCard />
     </CardContainer>
   )
 }

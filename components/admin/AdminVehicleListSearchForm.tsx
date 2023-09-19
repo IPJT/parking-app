@@ -1,10 +1,10 @@
 import { Dispatch, MutableRefObject, SetStateAction, useEffect, useRef } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { VehicleBrandEnum, VehicleStatusEnum } from '../../utils/enums'
-import { ButtonWrapper, GrowingButton } from '../VehicleAdder'
 import { Button } from '../form/Button'
 import { Input } from '../form/Input'
 import { Select } from '../form/Select'
+import styled from 'styled-components'
 
 export interface IAdminVehicleListSearchFormValues {
   Name?: string
@@ -64,3 +64,13 @@ export const AdminVehicleListSearchForm = ({
     </form>
   )
 }
+
+const ButtonWrapper = styled.div`
+  margin-top: 1.5rem;
+  display: flex;
+  column-gap: 10px;
+`
+
+const GrowingButton = styled(Button)`
+  flex-grow: 1;
+`

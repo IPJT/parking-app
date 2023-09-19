@@ -31,7 +31,7 @@ const StyledDialogOverlay = styled(Dialog.Overlay)`
 `
 
 const StyledDialogContent = styled(Dialog.Content)`
-  background-color: ${theme.colors.scheme.lightShades};
+  background-color: ${theme.colors.scheme.darkAccent};
   border-radius: 6px;
   position: fixed;
   top: 50%;
@@ -53,7 +53,7 @@ const StyledDialogTitle = styled(Dialog.Title)`
   display: block;
   margin-bottom: 1rem;
   font-weight: 500;
-  color: ${theme.colors.scheme.darkShades};
+  color: ${theme.colors.scheme.lightShades};
   font-size: 20px;
   text-align: center;
 `

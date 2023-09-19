@@ -1,4 +1,4 @@
-import { VehicleSelector } from '../components/VehicleSelector'
+import { VehicleSelector } from '../components/home/VehicleSelector'
 import { Layout } from '../components/layout'
 
 const Home = () => {

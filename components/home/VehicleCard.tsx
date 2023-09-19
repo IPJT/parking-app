@@ -1,7 +1,7 @@
 import Image from 'next/image'
 import styled from 'styled-components'
-import { theme } from '../styles/theme'
-import { FragmentType, graphql, useFragment } from '../__generated__'
+import { FragmentType, graphql, useFragment } from '../../__generated__'
+import { theme } from '../../styles/theme'
 
 type Props = {
   vehicle: FragmentType<typeof VehicleCard_VehicleFragment>

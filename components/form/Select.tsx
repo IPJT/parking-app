@@ -7,12 +7,13 @@ type SelectProps<T extends FieldValues> = {
   label: Path<T>
   register: UseFormRegister<T>
   options: string[]
+  labelStrings?: { [Key in keyof T]: string }
 }
 
-export const Select = <T extends FieldValues>({ label, options, register }: SelectProps<T>) => {
+export const Select = <T extends FieldValues>({ label, options, register, labelStrings }: SelectProps<T>) => {
   return (
     <LabelInputContainer>
-      <StyledLabel htmlFor={label}>{label}</StyledLabel>
+      <StyledLabel htmlFor={label}>{labelStrings ? labelStrings[label] : label}</StyledLabel>
       <StyledSelect id={label} {...register(label)}>
         <option></option>
         {options.map((option) => (
@@ -25,8 +26,7 @@ export const Select = <T extends FieldValues>({ label, options, register }: Sele
 
 const StyledLabel = styled.label`
   font-size: 15px;
-  color: ${theme.colors.scheme.darkAccent};
-  width: 50px;
+  color: ${theme.colors.scheme.lightShades};
 `
 
 const StyledSelect = styled.select`
@@ -36,7 +36,8 @@ const StyledSelect = styled.select`
   padding: 0 10px;
   font-size: 15px;
   line-height: 1;
-  color: ${theme.colors.scheme.darkAccent};
+  color: ${theme.colors.scheme.lightShades};
   height: 35px;
   border: 1px solid ${theme.colors.scheme.lightAccent};
+  background-color: rgba(0, 0, 0, 0.1);
 `

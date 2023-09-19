@@ -31,7 +31,10 @@ export const GenericCard = styled.div<{ $borderColor?: string }>`
   max-width: 300px;
   min-width: 300px;
   height: 200px;
-  border: ${(props) => (props.$borderColor === 'orange' ? `${theme.colors.semantics.warning} 2px solid` : 'unset')};
+  border: ${(props) =>
+    props.$borderColor === 'orange'
+      ? `${theme.colors.semantics.warning} 2px solid`
+      : `${theme.colors.scheme.lightAccent} 2px solid`};
   border-radius: 10px;
   background-color: ${(props) => props.theme.colors.scheme.darkAccent};
   display: flex;

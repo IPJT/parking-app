@@ -22,7 +22,11 @@ export const AdminVehicleListSearchForm = ({
   searchObjectRef: MutableRefObject<IAdminVehicleListSearchFormValues>
   refetch: any
 }) => {
-  const { register, handleSubmit } = useForm<IAdminVehicleListSearchFormValues>({
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<IAdminVehicleListSearchFormValues>({
     defaultValues: searchObjectRef.current,
   })
 
@@ -40,18 +44,20 @@ export const AdminVehicleListSearchForm = ({
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <div>
-        <Input<IAdminVehicleListSearchFormValues> label='Name' required={false} register={register} />
+        <Input<IAdminVehicleListSearchFormValues> label='Name' register={register} errors={errors} />
         <Select<IAdminVehicleListSearchFormValues>
           label='Brand'
           options={Object.values(VehicleBrandEnum)}
           register={register}
+          errors={errors}
         />
         <Select<IAdminVehicleListSearchFormValues>
           label='Status'
           options={Object.values(VehicleStatusEnum)}
           register={register}
+          errors={errors}
         />
-        <Input<IAdminVehicleListSearchFormValues> label='Owner' required={false} register={register} />
+        <Input<IAdminVehicleListSearchFormValues> label='Owner' register={register} errors={errors} />
       </div>
       <ButtonWrapper>
         <Button variant='secondary' onClick={() => setIsModalOpen(false)}>

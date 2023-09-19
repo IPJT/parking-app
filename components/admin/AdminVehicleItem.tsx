@@ -7,8 +7,14 @@ type Props = {
 export const AdminVehicleItem = (props: Props) => {
   const vehicle = useFragment(AdminVehicleItem_VehicleFragment, props.vehicle)
 
-  console.log(vehicle)
-  return <p>{vehicle.brand}</p>
+  return (
+    <>
+      <td>{vehicle.name}</td>
+      <td>{vehicle.brand}</td>
+      <td>{vehicle.status}</td>
+      <td>{vehicle.owner}</td>
+    </>
+  )
 }
 
 const AdminVehicleItem_VehicleFragment = graphql(/* GraphQL */ `

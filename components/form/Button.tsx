@@ -1,6 +1,6 @@
+import React from 'react'
 import styled from 'styled-components'
-import { theme } from '../styles/theme'
-import { MouseEventHandler } from 'react'
+import { theme } from '../../styles/theme'
 
 type ButtonTypes = 'primary' | 'secondary'
 
@@ -8,9 +8,9 @@ interface Props extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   variant: ButtonTypes
 }
 
-export const Button = ({ variant, ...props }: Props) => {
-  return <StyledButton $variant={variant} {...props} />
-}
+export const Button = React.forwardRef<HTMLButtonElement, Props>((props: Props, forwardedRef) => {
+  return <StyledButton $variant={props.variant} {...props} ref={forwardedRef} />
+})
 
 const handleColorType = (color: ButtonTypes) => {
   switch (color) {

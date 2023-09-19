@@ -3,6 +3,7 @@ import { useMemo } from 'react'
 import { ApolloClient, ApolloProvider, HttpLink, InMemoryCache, from, gql } from '@apollo/client'
 import { setContext } from '@apollo/client/link/context'
 import { useAuth } from '@clerk/nextjs'
+import { relayStylePagination } from '@apollo/client/utilities'
 
 const httpLink = new HttpLink({
   uri: process.env.NEXT_PUBLIC_GRAFBASE_API_URL as string,
@@ -25,7 +26,16 @@ export const ApolloProviderWrapper = ({ children }: PropsWithChildren) => {
 
     return new ApolloClient({
       link: from([authMiddleware, httpLink]),
-      cache: new InMemoryCache(),
+      cache: new InMemoryCache({
+        typePolicies: {
+          Query: {
+            fields: {
+              vehicleCollection: relayStylePagination(),
+              vehicleSearch: relayStylePagination(),
+            },
+          },
+        },
+      }),
     })
   }, [getToken])
 

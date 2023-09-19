@@ -4,7 +4,7 @@ import Image from 'next/image'
 import { Dispatch, SetStateAction, useState } from 'react'
 import styled from 'styled-components'
 import { graphql } from '../__generated__'
-import { Button } from './Button'
+import { Button } from './form/Button'
 import { GenericCard } from './VehicleCard'
 import { VechicleSelector_Query } from './VehicleSelector'
 

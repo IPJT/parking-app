@@ -30,6 +30,7 @@ const AdminPanelContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  gap: 3rem;
 `
 
 const Page = styled.div`

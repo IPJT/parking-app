@@ -6,4 +6,5 @@ type Vehicle @model @search {
   name: String!
   brand: String!
   owner: String
+  accessTokensReponse: JSON
 }

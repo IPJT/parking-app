@@ -33,6 +33,7 @@ export const VehicleAdderForm = ({ setIsExpanded }: { setIsExpanded: Dispatch<Se
     if (!userId) {
       throw new Error('No userID was found') //TODO-ian. Hur hanterar man detta på bästa sätt?
     }
+
     const { data: mutationData, errors } = await addVehicle({
       variables: { name: formData.Name, brand: formData.Brand, owner: userId },
     })

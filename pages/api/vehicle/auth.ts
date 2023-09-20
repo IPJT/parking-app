@@ -1,43 +1,56 @@
 import { NextApiRequest, NextApiResponse } from 'next'
+import { graphql } from '../../../__generated__'
+import { apolloClientOnServer } from '../../../services/ApolloClientOnServer'
+import { exchangeAuthCodeWithToken } from '../../../services/hmAccessTokens'
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  if (req.method !== 'GET') {
-    throw new Error('request method was not GET')
-  }
+  try {
+    const {
+      code: authCode,
+      error: authError,
+      state: vehicleId,
+    } = req.query as { code?: string; error?: string; state?: string }
 
-  const {
-    code: authCode,
-    error: authError,
-    state: authState,
-  } = req.query as { code?: string; error?: string; state?: string }
-
-  if (!authState) {
-    throw new Error('authState was not set as a query param by High Mobility')
-  }
-
-  if (authCode) {
-    const response = await fetch(`${process.env.OAUTH_TOKEN_URI}`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        grant_type: 'authorization_code',
-        code: authCode,
-        redirect_uri: process.env.NEXT_PUBLIC_REDIRECT_URI,
-        client_id: process.env.NEXT_PUBLIC_OAUTH_CLIENT_ID,
-        client_secret: process.env.OAUTH_CLIENT_SECRET,
-      }),
-    })
-
-    if (response.status !== 200) {
-      throw new Error(`Status code from /v1/access_tokens was ${response.status}`)
+    if (!vehicleId) {
+      throw new Error('state(vehicleId) was not set as a query param by High Mobility')
     }
 
-    const data = await response.json()
-    console.log({ data })
-  } else {
-  }
+    if (!authCode) {
+      throw new Error(`No authCode was received from HM. Error from HM: ${authError}`)
+    }
 
-  res.redirect('/')
+    const response = await exchangeAuthCodeWithToken(authCode)
+
+    if (response.status !== 200) {
+      throw new Error(
+        `Access token could not be fetched from access-token API. Error from HM: ${await response.json()}`
+      )
+    }
+
+    const accessTokensReponse = await response.json()
+    const { errors } = await apolloClientOnServer.mutate({
+      mutation: VehicleAddAccessTokensReponse_Mutation,
+      variables: { id: vehicleId, accessTokensReponse: accessTokensReponse },
+    })
+
+    if (errors) {
+      throw new Error(
+        `accessTokensReponse couldn't be saved to the DB. Here is the first of potentially more errors ${errors[0].toString()}}`
+      )
+    }
+  } catch (error) {
+    throw error //TODO-ian wtf do I do here?
+  } finally {
+    res.redirect('/?test=123')
+  }
 }
+
+const VehicleAddAccessTokensReponse_Mutation = graphql(/* GraphQL */ `
+  mutation VehicleAddAccessTokensReponse_Mutation($id: ID!, $accessTokensReponse: JSON!) {
+    vehicleUpdate(by: { id: $id }, input: { accessTokensReponse: $accessTokensReponse }) {
+      vehicle {
+        id
+      }
+    }
+  }
+`)

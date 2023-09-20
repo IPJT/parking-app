@@ -10,6 +10,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       error: authError,
       state: vehicleData,
     } = req.query as { code?: string; error?: string; state?: string }
+    throw new Error('awdawd')
 
     if (!vehicleData) {
       throw new Error('state(vehicleData) was not set as a query param by High Mobility')
@@ -41,10 +42,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       )
     }
   } catch (error) {
-    throw error //TODO-ian wtf do I do here?
-  } finally {
-    res.redirect('/?test=123')
+    res.redirect('/?errorToast=an-error-occured-during-auth-flow')
+    throw error //TODO-ian wtf do I do here? I need to log this! Include something traceable in all the log. E.g. userId + carName
   }
+  res.redirect('/')
 }
 
 const VehicleAdder_Mutation = graphql(/* GraphQL */ `

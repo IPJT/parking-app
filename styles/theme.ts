@@ -13,7 +13,7 @@ const theme: DefaultTheme = {
     semantics: {
       primary: '#2399f3',
       info: '#233143',
-      success: '#40a881',
+      success: '#40A86A',
       warning: '#bd9849',
       danger: '#f44336',
     },

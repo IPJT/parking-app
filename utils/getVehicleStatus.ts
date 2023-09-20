@@ -1,13 +1,17 @@
-async function getVehicleStatus(){
-    if(!vehicle.accessTokensReponse){
-        return "pending and make the user to re-try
-    }
+import { VehicleCard_VehicleFragmentFragment } from '../__generated__/graphql'
+import { VehicleStatusEnum } from './enums'
 
-    if(vehicle.accessTokensReponse.status === "pending"){
-        return "pending and prompt user to check their emails"
-    }
+export function getVehicleStatus(vehicle: VehicleCard_VehicleFragmentFragment) {
+  const accessTokensReponse = vehicle.accessTokensReponse //todo add zod-validation
 
-    if(vehicle.accessTokensReponse.status === "approved"){
-        return "approved"
-    }
+  switch (accessTokensReponse.status) {
+    case 'pending':
+      return VehicleStatusEnum.pending
+
+    case 'approved':
+      return VehicleStatusEnum.approved
+
+    default:
+      throw new Error(`Unvalid accessTokensReponse.status for vehicle with ID: ${vehicle.id}`)
+  }
 }

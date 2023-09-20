@@ -4,16 +4,17 @@ import styled from 'styled-components'
 import { Button } from '../form/Button'
 import { VehicleAdderForm } from './VehicleAdderForm'
 import { GenericCard } from './VehicleCard'
+import { theme } from '../../styles/theme'
 
 export const VehicleAdderCard = () => {
   const [isExpanded, setIsExpanded] = useState(false)
 
   return isExpanded ? (
-    <GenericCard>
+    <GenericCard $borderColor={theme.colors.scheme.lightAccent}>
       <VehicleAdderForm setIsExpanded={setIsExpanded} />
     </GenericCard>
   ) : (
-    <GenericCard onClick={() => setIsExpanded(true)}>
+    <GenericCard $borderColor={theme.colors.scheme.lightAccent} onClick={() => setIsExpanded(true)}>
       <PlusWrapper>
         <Image src='/plus-solid.svg' alt='plus icon' width={70} height={70} />
       </PlusWrapper>

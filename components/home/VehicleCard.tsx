@@ -2,6 +2,8 @@ import Image from 'next/image'
 import styled from 'styled-components'
 import { FragmentType, graphql, useFragment } from '../../__generated__'
 import { theme } from '../../styles/theme'
+import { getVehicleStatus } from '../../utils/getVehicleStatus'
+import { VehicleStatusEnum } from '../../utils/enums'
 
 type Props = {
   vehicle: FragmentType<typeof VehicleCard_VehicleFragment>
@@ -9,31 +11,31 @@ type Props = {
 
 export const VehicleCard = (props: Props) => {
   const vehicle = useFragment(VehicleCard_VehicleFragment, props.vehicle)
+  const vehicleStatus = getVehicleStatus(vehicle)
 
   return (
-    <GenericCard $borderColor='none'>
+    <GenericCard $borderColor={getBorderColor(vehicleStatus)}>
       <p>{vehicle.name}</p>
       <Image src={`/${vehicle.brand}.svg`} alt='plus icon' width={70} height={70} />
-      <p>Status är oklar</p>
+      <p>{getStatusString(vehicleStatus)}</p>
     </GenericCard>
   )
 }
 
 const VehicleCard_VehicleFragment = graphql(/* GraphQL */ `
   fragment VehicleCard_VehicleFragment on Vehicle {
+    id
     name
     brand
+    accessTokensReponse
   }
 `)
 
-export const GenericCard = styled.div<{ $borderColor?: string }>`
+export const GenericCard = styled.div<{ $borderColor: string }>`
   max-width: 300px;
   min-width: 300px;
   height: 200px;
-  border: ${(props) =>
-    props.$borderColor === 'orange'
-      ? `${theme.colors.semantics.warning} 2px solid`
-      : `${theme.colors.scheme.lightAccent} 2px solid`};
+  border: ${(props) => `${props.$borderColor} 2px solid`};
   border-radius: 10px;
   background-color: ${(props) => props.theme.colors.scheme.darkAccent};
   display: flex;
@@ -45,3 +47,23 @@ export const GenericCard = styled.div<{ $borderColor?: string }>`
     cursor: pointer;
   }
 `
+
+function getBorderColor(vehicleStatus: VehicleStatusEnum) {
+  switch (vehicleStatus) {
+    case VehicleStatusEnum.pending:
+      return theme.colors.semantics.warning
+
+    case VehicleStatusEnum.approved:
+      return theme.colors.semantics.success
+  }
+}
+
+function getStatusString(vehicleStatus: VehicleStatusEnum) {
+  switch (vehicleStatus) {
+    case VehicleStatusEnum.pending:
+      return 'Väntar på godkännande'
+
+    case VehicleStatusEnum.approved:
+      return 'Godkänd'
+  }
+}

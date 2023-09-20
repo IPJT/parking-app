@@ -1,13 +1,13 @@
+import { useMutation } from '@apollo/client'
+import { useAuth } from '@clerk/nextjs'
 import { Dispatch, SetStateAction } from 'react'
+import { SubmitHandler, useForm } from 'react-hook-form'
+import styled from 'styled-components'
 import { graphql } from '../../__generated__'
 import { VehicleBrandEnum, VehicleStatusEnum } from '../../utils/enums'
 import { Button } from '../form/Button'
-import styled from 'styled-components'
 import { Input } from '../form/Input'
 import { Select } from '../form/Select'
-import { SubmitHandler, useForm } from 'react-hook-form'
-import { useMutation } from '@apollo/client'
-import { useAuth } from '@clerk/nextjs'
 import { VechicleSelector_Query } from './VehicleSelector'
 
 export interface IVehicleAdderFormValues {
@@ -29,14 +29,33 @@ export const VehicleAdderForm = ({ setIsExpanded }: { setIsExpanded: Dispatch<Se
     formState: { errors },
   } = useForm<IVehicleAdderFormValues>()
 
-  const onSubmit: SubmitHandler<IVehicleAdderFormValues> = async (data) => {
+  const onSubmit: SubmitHandler<IVehicleAdderFormValues> = async (formData) => {
     if (!userId) {
       throw new Error('No userID was found') //TODO-ian. Hur hanterar man detta på bästa sätt?
     }
-    await addVehicle({
-      variables: { name: data.Name, brand: data.Brand, status: VehicleStatusEnum.pending, owner: userId },
+    const { data: mutationData, errors } = await addVehicle({
+      variables: { name: formData.Name, brand: formData.Brand, status: VehicleStatusEnum.pending, owner: userId },
     })
-    setIsExpanded(false)
+
+    if (errors && errors.length > 0) {
+      throw new Error(errors[0].message)
+    }
+
+    const newVehicleId = mutationData?.vehicleCreate?.vehicle?.id
+
+    if (!newVehicleId) {
+      throw new Error('A vehicle could not be created in the database')
+    }
+
+    const queryParams = [
+      `client_id=${process.env.NEXT_PUBLIC_OAUTH_CLIENT_ID}`,
+      `app_id=${process.env.NEXT_PUBLIC_HM_APP_ID}`,
+      `redirect_uri=${process.env.NEXT_PUBLIC_REDIRECT_URI}`,
+      `state=${newVehicleId}`,
+    ]
+
+    const redirectUrl = `${process.env.NEXT_PUBLIC_HM_AUTH_URI}?${queryParams.join('&')}`
+    window.location.assign(redirectUrl)
   }
 
   return (

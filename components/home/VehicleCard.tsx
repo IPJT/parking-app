@@ -11,10 +11,10 @@ export const VehicleCard = (props: Props) => {
   const vehicle = useFragment(VehicleCard_VehicleFragment, props.vehicle)
 
   return (
-    <GenericCard $borderColor={`${vehicle.status === 'Pending' ? 'orange' : 'none'}`}>
+    <GenericCard $borderColor='none'>
       <p>{vehicle.name}</p>
       <Image src={`/${vehicle.brand}.svg`} alt='plus icon' width={70} height={70} />
-      <p>{vehicle.status === 'Pending' ? 'Väntar på godkännande' : 'Redo!'}</p>
+      <p>Status är oklar</p>
     </GenericCard>
   )
 }
@@ -23,7 +23,6 @@ const VehicleCard_VehicleFragment = graphql(/* GraphQL */ `
   fragment VehicleCard_VehicleFragment on Vehicle {
     name
     brand
-    status
   }
 `)
 

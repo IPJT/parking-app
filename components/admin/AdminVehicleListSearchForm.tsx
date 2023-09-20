@@ -1,6 +1,6 @@
 import { Dispatch, MutableRefObject, SetStateAction, useEffect, useRef } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
-import { VehicleBrandEnum, VehicleStatusEnum } from '../../utils/enums'
+import { VehicleBrandEnum } from '../../utils/enums'
 import { Button } from '../form/Button'
 import { Input } from '../form/Input'
 import { Select } from '../form/Select'
@@ -9,7 +9,6 @@ import styled from 'styled-components'
 export interface IAdminVehicleListSearchFormValues {
   Name?: string
   Brand?: VehicleBrandEnum
-  Status?: VehicleStatusEnum
   Owner?: string
 }
 
@@ -36,7 +35,6 @@ export const AdminVehicleListSearchForm = ({
     refetch({
       name: data.Name ? `(?i).*${data.Name}.*` : '.*',
       brand: data.Brand ? `(?i).*${data.Brand}.*` : '.*',
-      status: data.Status ? `(?i).*${data.Status}.*` : '.*',
       owner: data.Owner ? `(?i).*${data.Owner}.*` : '.*',
     })
   }
@@ -48,12 +46,6 @@ export const AdminVehicleListSearchForm = ({
         <Select<IAdminVehicleListSearchFormValues>
           label='Brand'
           options={Object.values(VehicleBrandEnum)}
-          register={register}
-          errors={errors}
-        />
-        <Select<IAdminVehicleListSearchFormValues>
-          label='Status'
-          options={Object.values(VehicleStatusEnum)}
           register={register}
           errors={errors}
         />

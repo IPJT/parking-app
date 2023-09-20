@@ -4,7 +4,7 @@ import { Dispatch, SetStateAction } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import styled from 'styled-components'
 import { graphql } from '../../__generated__'
-import { VehicleBrandEnum, VehicleStatusEnum } from '../../utils/enums'
+import { VehicleBrandEnum } from '../../utils/enums'
 import { Button } from '../form/Button'
 import { Input } from '../form/Input'
 import { Select } from '../form/Select'
@@ -34,7 +34,7 @@ export const VehicleAdderForm = ({ setIsExpanded }: { setIsExpanded: Dispatch<Se
       throw new Error('No userID was found') //TODO-ian. Hur hanterar man detta på bästa sätt?
     }
     const { data: mutationData, errors } = await addVehicle({
-      variables: { name: formData.Name, brand: formData.Brand, status: VehicleStatusEnum.pending, owner: userId },
+      variables: { name: formData.Name, brand: formData.Brand, owner: userId },
     })
 
     if (errors && errors.length > 0) {
@@ -115,8 +115,8 @@ const GrowingButton = styled(Button)`
 `
 
 const VehicleAdder_Mutation = graphql(/* GraphQL */ `
-  mutation VehicleAdder_Mutation($owner: String!, $name: String!, $status: String!, $brand: String!) {
-    vehicleCreate(input: { owner: $owner, name: $name, status: $status, brand: $brand }) {
+  mutation VehicleAdder_Mutation($owner: String!, $name: String!, $brand: String!) {
+    vehicleCreate(input: { owner: $owner, name: $name, brand: $brand }) {
       vehicle {
         id
       }

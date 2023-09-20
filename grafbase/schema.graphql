@@ -5,6 +5,5 @@ schema @auth(providers: [{ type: oidc, issuer: "{{ env.CLERK_ISSUER_URL }}" }], 
 type Vehicle @model @search {
   name: String!
   brand: String!
-  status: String!
   owner: String
 }

@@ -15,7 +15,6 @@ export const AdminVehicleList = () => {
     variables: {
       name: '.*',
       brand: '.*',
-      status: '.*',
       owner: '.*',
     },
   })
@@ -49,7 +48,6 @@ export const AdminVehicleList = () => {
             <th>Nr.</th>
             <th>Name</th>
             <th>Brand</th>
-            <th>Status</th>
             <th>Owner</th>
           </tr>
           {data?.vehicleSearch?.edges.map((edge, index) => {
@@ -108,18 +106,11 @@ const StyledTable = styled.table`
 `
 
 export const AdminVehicleList_Query = graphql(/* GraphQL */ `
-  query AdminVehicleList_Query($after: String, $name: String!, $brand: String!, $status: String!, $owner: String!) {
+  query AdminVehicleList_Query($after: String, $name: String!, $brand: String!, $owner: String!) {
     vehicleSearch(
       first: 10
       after: $after
-      filter: {
-        ALL: [
-          { name: { regex: $name } }
-          { brand: { regex: $brand } }
-          { status: { regex: $status } }
-          { owner: { regex: $owner } }
-        ]
-      }
+      filter: { ALL: [{ name: { regex: $name } }, { brand: { regex: $brand } }, { owner: { regex: $owner } }] }
     ) {
       edges {
         node {

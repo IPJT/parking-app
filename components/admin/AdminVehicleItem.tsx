@@ -11,7 +11,6 @@ export const AdminVehicleItem = (props: Props) => {
     <>
       <td>{vehicle.name}</td>
       <td>{vehicle.brand}</td>
-      <td>{vehicle.status}</td>
       <td>{vehicle.owner}</td>
     </>
   )
@@ -21,7 +20,6 @@ const AdminVehicleItem_VehicleFragment = graphql(/* GraphQL */ `
   fragment AdminVehicleItem_VehicleFragment on Vehicle {
     name
     brand
-    status
     owner
   }
 `)

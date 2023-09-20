@@ -1,14 +1,11 @@
-import { useMutation } from '@apollo/client'
 import { useAuth } from '@clerk/nextjs'
 import { Dispatch, SetStateAction } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import styled from 'styled-components'
-import { graphql } from '../../__generated__'
 import { VehicleBrandEnum } from '../../utils/enums'
 import { Button } from '../form/Button'
 import { Input } from '../form/Input'
 import { Select } from '../form/Select'
-import { VechicleSelector_Query } from './VehicleSelector'
 
 export interface IVehicleAdderFormValues {
   Name: string
@@ -17,12 +14,11 @@ export interface IVehicleAdderFormValues {
 
 const LABEL_STRINGS: { [Key in keyof IVehicleAdderFormValues]: string } = {
   Name: 'Bilens namn',
-  Brand: 'Bilens fabrikat',
+  Brand: 'Bilmärke',
 }
 
 export const VehicleAdderForm = ({ setIsExpanded }: { setIsExpanded: Dispatch<SetStateAction<boolean>> }) => {
   const { userId } = useAuth()
-  const [addVehicle, { loading }] = useMutation(VehicleAdder_Mutation, { refetchQueries: [VechicleSelector_Query] })
   const {
     register,
     handleSubmit,
@@ -34,25 +30,13 @@ export const VehicleAdderForm = ({ setIsExpanded }: { setIsExpanded: Dispatch<Se
       throw new Error('No userID was found') //TODO-ian. Hur hanterar man detta på bästa sätt?
     }
 
-    const { data: mutationData, errors } = await addVehicle({
-      variables: { name: formData.Name, brand: formData.Brand, owner: userId },
-    })
-
-    if (errors && errors.length > 0) {
-      throw new Error(errors[0].message)
-    }
-
-    const newVehicleId = mutationData?.vehicleCreate?.vehicle?.id
-
-    if (!newVehicleId) {
-      throw new Error('A vehicle could not be created in the database')
-    }
+    const vehicleData = { name: formData.Name, brand: formData.Brand, owner: userId }
 
     const queryParams = [
       `client_id=${process.env.NEXT_PUBLIC_OAUTH_CLIENT_ID}`,
       `app_id=${process.env.NEXT_PUBLIC_HM_APP_ID}`,
       `redirect_uri=${process.env.NEXT_PUBLIC_REDIRECT_URI}`,
-      `state=${newVehicleId}`,
+      `state=${JSON.stringify(vehicleData)}`,
     ]
 
     const redirectUrl = `${process.env.NEXT_PUBLIC_HM_AUTH_URI}?${queryParams.join('&')}`
@@ -90,7 +74,7 @@ export const VehicleAdderForm = ({ setIsExpanded }: { setIsExpanded: Dispatch<Se
           Tillbaka
         </Button>
         <GrowingButton variant='primary' type='submit'>
-          {loading ? 'Laddar...' : 'Lägg till'}
+          Påbörja autentisering
         </GrowingButton>
       </ButtonWrapper>
     </StyledForm>
@@ -114,13 +98,3 @@ const ButtonWrapper = styled.div`
 const GrowingButton = styled(Button)`
   flex-grow: 1;
 `
-
-const VehicleAdder_Mutation = graphql(/* GraphQL */ `
-  mutation VehicleAdder_Mutation($owner: String!, $name: String!, $brand: String!) {
-    vehicleCreate(input: { owner: $owner, name: $name, brand: $brand }) {
-      vehicle {
-        id
-      }
-    }
-  }
-`)

@@ -8,11 +8,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const {
       code: authCode,
       error: authError,
-      state: vehicleId,
+      state: vehicleData,
     } = req.query as { code?: string; error?: string; state?: string }
 
-    if (!vehicleId) {
-      throw new Error('state(vehicleId) was not set as a query param by High Mobility')
+    if (!vehicleData) {
+      throw new Error('state(vehicleData) was not set as a query param by High Mobility')
     }
 
     if (!authCode) {
@@ -27,10 +27,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       )
     }
 
+    const vehicleDataObject = JSON.parse(vehicleData) as { name: string; brand: string; owner: string } //TODO. Add zod-validation
+
     const accessTokensReponse = await response.json()
     const { errors } = await apolloClientOnServer.mutate({
-      mutation: VehicleAddAccessTokensReponse_Mutation,
-      variables: { id: vehicleId, accessTokensReponse: accessTokensReponse },
+      mutation: VehicleAdder_Mutation,
+      variables: { ...vehicleDataObject, accessTokensReponse: accessTokensReponse },
     })
 
     if (errors) {
@@ -45,9 +47,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   }
 }
 
-const VehicleAddAccessTokensReponse_Mutation = graphql(/* GraphQL */ `
-  mutation VehicleAddAccessTokensReponse_Mutation($id: ID!, $accessTokensReponse: JSON!) {
-    vehicleUpdate(by: { id: $id }, input: { accessTokensReponse: $accessTokensReponse }) {
+const VehicleAdder_Mutation = graphql(/* GraphQL */ `
+  mutation VehicleAdder_Mutation($owner: String!, $name: String!, $brand: String!, $accessTokensReponse: JSON!) {
+    vehicleCreate(input: { owner: $owner, name: $name, brand: $brand, accessTokensReponse: $accessTokensReponse }) {
       vehicle {
         id
       }

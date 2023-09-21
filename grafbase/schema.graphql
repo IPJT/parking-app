@@ -3,8 +3,9 @@ schema @auth(providers: [{ type: oidc, issuer: "{{ env.CLERK_ISSUER_URL }}" }], 
 }
 
 type Vehicle @model @search {
+  vin: String! @unique
   name: String!
   brand: String!
-  owner: String
+  owner: String!
   accessTokensReponse: JSON!
 }

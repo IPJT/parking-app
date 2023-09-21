@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 import { graphql } from '../../../__generated__'
-import { apolloClientOnServer } from '../../../services/ApolloClientOnServer'
-import { exchangeAuthCodeWithToken } from '../../../services/hmAccessTokens'
+import { apolloClientOnServer } from '../../../clients/ApolloClientOnServer'
+import { exchangeAuthCodeWithToken } from '../../../clients/hmAccessTokens'
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   try {
@@ -10,7 +10,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       error: authError,
       state: vehicleData,
     } = req.query as { code?: string; error?: string; state?: string }
-    throw new Error('awdawd')
 
     if (!vehicleData) {
       throw new Error('state(vehicleData) was not set as a query param by High Mobility')
@@ -28,8 +27,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       )
     }
 
+    //use Token to obtain vin through the vehicle-info api
+
     const vehicleDataObject = JSON.parse(vehicleData) as { name: string; brand: string; owner: string } //TODO. Add zod-validation
 
+    //make vin a unique field on the Vehicle type in db
+    //If we get an error for duplicate VINS, tell it to the user!
     const accessTokensReponse = await response.json()
     const { errors } = await apolloClientOnServer.mutate({
       mutation: VehicleAdder_Mutation,

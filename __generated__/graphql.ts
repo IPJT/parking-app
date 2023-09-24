@@ -154,23 +154,6 @@ export type SearchInfo = {
   totalHits: Scalars['Int']['output'];
 };
 
-export type StringOrNullSearchFilterInput = {
-  ALL?: InputMaybe<Array<StringOrNullSearchFilterInput>>;
-  ANY?: InputMaybe<Array<StringOrNullSearchFilterInput>>;
-  NONE?: InputMaybe<Array<StringOrNullSearchFilterInput>>;
-  NOT?: InputMaybe<StringOrNullSearchFilterInput>;
-  eq?: InputMaybe<Scalars['String']['input']>;
-  gt?: InputMaybe<Scalars['String']['input']>;
-  gte?: InputMaybe<Scalars['String']['input']>;
-  in?: InputMaybe<Array<Scalars['String']['input']>>;
-  isNull?: InputMaybe<Scalars['Boolean']['input']>;
-  lt?: InputMaybe<Scalars['String']['input']>;
-  lte?: InputMaybe<Scalars['String']['input']>;
-  neq?: InputMaybe<Scalars['String']['input']>;
-  notIn?: InputMaybe<Array<Scalars['String']['input']>>;
-  regex?: InputMaybe<Scalars['String']['input']>;
-};
-
 export type StringSearchFilterInput = {
   ALL?: InputMaybe<Array<StringSearchFilterInput>>;
   ANY?: InputMaybe<Array<StringSearchFilterInput>>;
@@ -196,13 +179,15 @@ export type Vehicle = {
   /** Unique identifier */
   id: Scalars['ID']['output'];
   name: Scalars['String']['output'];
-  owner?: Maybe<Scalars['String']['output']>;
+  owner: Scalars['String']['output'];
   /** when the model was updated */
   updatedAt: Scalars['DateTime']['output'];
+  vin: Scalars['String']['output'];
 };
 
 export type VehicleByInput = {
   id?: InputMaybe<Scalars['ID']['input']>;
+  vin?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type VehicleCollectionFilterInput = {
@@ -221,7 +206,8 @@ export type VehicleCreateInput = {
   accessTokensReponse: Scalars['JSON']['input'];
   brand: Scalars['String']['input'];
   name: Scalars['String']['input'];
-  owner?: InputMaybe<Scalars['String']['input']>;
+  owner: Scalars['String']['input'];
+  vin: Scalars['String']['input'];
 };
 
 export type VehicleCreateManyInput = {
@@ -284,8 +270,9 @@ export type VehicleSearchFilterInput = {
   brand?: InputMaybe<StringSearchFilterInput>;
   createdAt?: InputMaybe<DateTimeSearchFilterInput>;
   name?: InputMaybe<StringSearchFilterInput>;
-  owner?: InputMaybe<StringOrNullSearchFilterInput>;
+  owner?: InputMaybe<StringSearchFilterInput>;
   updatedAt?: InputMaybe<DateTimeSearchFilterInput>;
+  vin?: InputMaybe<StringSearchFilterInput>;
 };
 
 /** Input to update a Vehicle */
@@ -294,6 +281,7 @@ export type VehicleUpdateInput = {
   brand?: InputMaybe<Scalars['String']['input']>;
   name?: InputMaybe<Scalars['String']['input']>;
   owner?: InputMaybe<Scalars['String']['input']>;
+  vin?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type VehicleUpdateManyInput = {
@@ -311,7 +299,7 @@ export type VehicleUpdatePayload = {
   vehicle?: Maybe<Vehicle>;
 };
 
-export type AdminVehicleItem_VehicleFragmentFragment = { __typename?: 'Vehicle', name: string, brand: string, owner?: string | null } & { ' $fragmentName'?: 'AdminVehicleItem_VehicleFragmentFragment' };
+export type AdminVehicleItem_VehicleFragmentFragment = { __typename?: 'Vehicle', name: string, brand: string, owner: string } & { ' $fragmentName'?: 'AdminVehicleItem_VehicleFragmentFragment' };
 
 export type AdminVehicleList_QueryQueryVariables = Exact<{
   after?: InputMaybe<Scalars['String']['input']>;
@@ -340,6 +328,7 @@ export type VechicleSelector_QueryQuery = { __typename?: 'Query', vehicleSearch?
       ) }> } | null };
 
 export type VehicleAdder_MutationMutationVariables = Exact<{
+  vin: Scalars['String']['input'];
   owner: Scalars['String']['input'];
   name: Scalars['String']['input'];
   brand: Scalars['String']['input'];
@@ -347,10 +336,10 @@ export type VehicleAdder_MutationMutationVariables = Exact<{
 }>;
 
 
-export type VehicleAdder_MutationMutation = { __typename?: 'Mutation', vehicleCreate?: { __typename?: 'VehicleCreatePayload', vehicle?: { __typename?: 'Vehicle', id: string } | null } | null };
+export type VehicleAdder_MutationMutation = { __typename?: 'Mutation', vehicleCreate?: { __typename?: 'VehicleCreatePayload', vehicle?: { __typename?: 'Vehicle', vin: string, id: string } | null } | null };
 
 export const AdminVehicleItem_VehicleFragmentFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"AdminVehicleItem_VehicleFragment"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Vehicle"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"brand"}},{"kind":"Field","name":{"kind":"Name","value":"owner"}}]}}]} as unknown as DocumentNode<AdminVehicleItem_VehicleFragmentFragment, unknown>;
 export const VehicleCard_VehicleFragmentFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"VehicleCard_VehicleFragment"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Vehicle"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"brand"}},{"kind":"Field","name":{"kind":"Name","value":"accessTokensReponse"}}]}}]} as unknown as DocumentNode<VehicleCard_VehicleFragmentFragment, unknown>;
 export const AdminVehicleList_QueryDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"AdminVehicleList_Query"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"after"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"name"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"brand"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"owner"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"vehicleSearch"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"first"},"value":{"kind":"IntValue","value":"10"}},{"kind":"Argument","name":{"kind":"Name","value":"after"},"value":{"kind":"Variable","name":{"kind":"Name","value":"after"}}},{"kind":"Argument","name":{"kind":"Name","value":"filter"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"ALL"},"value":{"kind":"ListValue","values":[{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"name"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"regex"},"value":{"kind":"Variable","name":{"kind":"Name","value":"name"}}}]}}]},{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"brand"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"regex"},"value":{"kind":"Variable","name":{"kind":"Name","value":"brand"}}}]}}]},{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"owner"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"regex"},"value":{"kind":"Variable","name":{"kind":"Name","value":"owner"}}}]}}]}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"AdminVehicleItem_VehicleFragment"}},{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"searchInfo"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"totalHits"}}]}},{"kind":"Field","name":{"kind":"Name","value":"pageInfo"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"endCursor"}},{"kind":"Field","name":{"kind":"Name","value":"hasNextPage"}}]}}]}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"AdminVehicleItem_VehicleFragment"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Vehicle"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"brand"}},{"kind":"Field","name":{"kind":"Name","value":"owner"}}]}}]} as unknown as DocumentNode<AdminVehicleList_QueryQuery, AdminVehicleList_QueryQueryVariables>;
 export const VechicleSelector_QueryDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"VechicleSelector_Query"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"first"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"owner"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"vehicleSearch"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"first"},"value":{"kind":"Variable","name":{"kind":"Name","value":"first"}}},{"kind":"Argument","name":{"kind":"Name","value":"filter"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"owner"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"owner"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"VehicleCard_VehicleFragment"}},{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"VehicleCard_VehicleFragment"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Vehicle"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"brand"}},{"kind":"Field","name":{"kind":"Name","value":"accessTokensReponse"}}]}}]} as unknown as DocumentNode<VechicleSelector_QueryQuery, VechicleSelector_QueryQueryVariables>;
-export const VehicleAdder_MutationDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"VehicleAdder_Mutation"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"owner"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"name"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"brand"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"accessTokensReponse"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"JSON"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"vehicleCreate"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"owner"},"value":{"kind":"Variable","name":{"kind":"Name","value":"owner"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"name"},"value":{"kind":"Variable","name":{"kind":"Name","value":"name"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"brand"},"value":{"kind":"Variable","name":{"kind":"Name","value":"brand"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"accessTokensReponse"},"value":{"kind":"Variable","name":{"kind":"Name","value":"accessTokensReponse"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"vehicle"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]}}]} as unknown as DocumentNode<VehicleAdder_MutationMutation, VehicleAdder_MutationMutationVariables>;
+export const VehicleAdder_MutationDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"VehicleAdder_Mutation"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"vin"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"owner"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"name"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"brand"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"accessTokensReponse"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"JSON"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"vehicleCreate"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"vin"},"value":{"kind":"Variable","name":{"kind":"Name","value":"vin"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"owner"},"value":{"kind":"Variable","name":{"kind":"Name","value":"owner"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"name"},"value":{"kind":"Variable","name":{"kind":"Name","value":"name"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"brand"},"value":{"kind":"Variable","name":{"kind":"Name","value":"brand"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"accessTokensReponse"},"value":{"kind":"Variable","name":{"kind":"Name","value":"accessTokensReponse"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"vehicle"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"vin"}},{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]}}]} as unknown as DocumentNode<VehicleAdder_MutationMutation, VehicleAdder_MutationMutationVariables>;

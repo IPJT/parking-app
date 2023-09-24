@@ -17,7 +17,7 @@ const documents = {
     "\n  query AdminVehicleList_Query($after: String, $name: String!, $brand: String!, $owner: String!) {\n    vehicleSearch(\n      first: 10\n      after: $after\n      filter: { ALL: [{ name: { regex: $name } }, { brand: { regex: $brand } }, { owner: { regex: $owner } }] }\n    ) {\n      edges {\n        node {\n          ...AdminVehicleItem_VehicleFragment\n          id\n        }\n      }\n      searchInfo {\n        totalHits\n      }\n      pageInfo {\n        endCursor\n        hasNextPage\n      }\n    }\n  }\n": types.AdminVehicleList_QueryDocument,
     "\n  fragment VehicleCard_VehicleFragment on Vehicle {\n    id\n    name\n    brand\n    accessTokensReponse\n  }\n": types.VehicleCard_VehicleFragmentFragmentDoc,
     "\n  query VechicleSelector_Query($first: Int!, $owner: String!) {\n    vehicleSearch(first: $first, filter: { owner: { eq: $owner } }) {\n      edges {\n        node {\n          ...VehicleCard_VehicleFragment\n          id\n        }\n      }\n    }\n  }\n": types.VechicleSelector_QueryDocument,
-    "\n  mutation VehicleAdder_Mutation($owner: String!, $name: String!, $brand: String!, $accessTokensReponse: JSON!) {\n    vehicleCreate(input: { owner: $owner, name: $name, brand: $brand, accessTokensReponse: $accessTokensReponse }) {\n      vehicle {\n        id\n      }\n    }\n  }\n": types.VehicleAdder_MutationDocument,
+    "\n  mutation VehicleAdder_Mutation(\n    $vin: String!\n    $owner: String!\n    $name: String!\n    $brand: String!\n    $accessTokensReponse: JSON!\n  ) {\n    vehicleCreate(\n      input: { vin: $vin, owner: $owner, name: $name, brand: $brand, accessTokensReponse: $accessTokensReponse }\n    ) {\n      vehicle {\n        vin\n        id\n      }\n    }\n  }\n": types.VehicleAdder_MutationDocument,
 };
 
 /**
@@ -53,7 +53,7 @@ export function graphql(source: "\n  query VechicleSelector_Query($first: Int!, 
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "\n  mutation VehicleAdder_Mutation($owner: String!, $name: String!, $brand: String!, $accessTokensReponse: JSON!) {\n    vehicleCreate(input: { owner: $owner, name: $name, brand: $brand, accessTokensReponse: $accessTokensReponse }) {\n      vehicle {\n        id\n      }\n    }\n  }\n"): (typeof documents)["\n  mutation VehicleAdder_Mutation($owner: String!, $name: String!, $brand: String!, $accessTokensReponse: JSON!) {\n    vehicleCreate(input: { owner: $owner, name: $name, brand: $brand, accessTokensReponse: $accessTokensReponse }) {\n      vehicle {\n        id\n      }\n    }\n  }\n"];
+export function graphql(source: "\n  mutation VehicleAdder_Mutation(\n    $vin: String!\n    $owner: String!\n    $name: String!\n    $brand: String!\n    $accessTokensReponse: JSON!\n  ) {\n    vehicleCreate(\n      input: { vin: $vin, owner: $owner, name: $name, brand: $brand, accessTokensReponse: $accessTokensReponse }\n    ) {\n      vehicle {\n        vin\n        id\n      }\n    }\n  }\n"): (typeof documents)["\n  mutation VehicleAdder_Mutation(\n    $vin: String!\n    $owner: String!\n    $name: String!\n    $brand: String!\n    $accessTokensReponse: JSON!\n  ) {\n    vehicleCreate(\n      input: { vin: $vin, owner: $owner, name: $name, brand: $brand, accessTokensReponse: $accessTokensReponse }\n    ) {\n      vehicle {\n        vin\n        id\n      }\n    }\n  }\n"];
 
 export function graphql(source: string) {
   return (documents as any)[source] ?? {};

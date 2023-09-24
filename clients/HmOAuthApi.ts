@@ -1,5 +1,5 @@
 async function exchangeAuthCodeWithToken(authCode: string) {
-  const response = await fetch(`${process.env.OAUTH_TOKEN_URI}`, {
+  const response = await fetch(`${process.env.OAUTH_BASE_URI}/access_tokens`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -16,4 +16,16 @@ async function exchangeAuthCodeWithToken(authCode: string) {
   return response
 }
 
-export { exchangeAuthCodeWithToken }
+async function exchangeTokenWithVehicleInfo(token: string) {
+  const response = await fetch(`${process.env.OAUTH_BASE_URI}/vehicleinfo`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+  })
+
+  return response
+}
+
+export { exchangeAuthCodeWithToken, exchangeTokenWithVehicleInfo }

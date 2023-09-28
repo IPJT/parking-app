@@ -1,7 +1,6 @@
 import Image from 'next/image'
 import { useState } from 'react'
 import styled from 'styled-components'
-import { Button } from '../form/Button'
 import { VehicleAdderForm } from './VehicleAdderForm'
 import { GenericCard } from './VehicleCard'
 import { theme } from '../../styles/theme'

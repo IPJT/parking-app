@@ -1,3 +1,5 @@
+import { ToastErrorObject } from '../components/Toast'
+
 export enum VehicleBrandEnum {
   bmw = 'BMW',
   audi = 'Audi',
@@ -8,7 +10,15 @@ export enum VehicleStatusEnum {
   approved,
 }
 
-export const ERROR_TOASTS = {
-  vehichleAlreadyExists: 'Bilen finns redan tillagd i våra system. Vänligen kontakta kundservice',
-  genericError: 'Oj då! Det verkar som om något gick fel. Vänligen testa igen eller kontakta kundservice',
+export const ERROR_TOASTS: { [key: string]: ToastErrorObject } = {
+  vehichleAlreadyExists: {
+    title: 'Hoppsan!',
+    description: 'Bilen finns redan tillagd i våra system. Vänligen kontakta kundservice.',
+    type: 'warning',
+  },
+  genericError: {
+    title: 'Oj då!',
+    description: 'Det verkar som om något gick fel. Vänligen testa igen eller kontakta kundservice',
+    type: 'error',
+  },
 }

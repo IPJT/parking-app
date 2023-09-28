@@ -52,15 +52,15 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     if (errors) {
       if (errors.find((error) => error.message.match('is already taken on field "vin"'))) {
         errorToast = 'vehichleAlreadyExists'
+      } else {
+        throw new Error(
+          `Car couldn't be saved to the DB. Here is the first of potentially more errors ${errors[0].toString()}}`
+        )
       }
-
-      throw new Error(
-        `Car couldn't be saved to the DB. Here is the first of potentially more errors ${errors[0].toString()}}`
-      )
     }
   } catch (error: any) {
     errorToast = 'genericError'
-    error.log(error.message)
+    console.log(error.message)
     throw error //TODO-ian wtf do I do here? I need to log this! Include something traceable in all the log. E.g. userId + carName
   } finally {
     if (errorToast) {

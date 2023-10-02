@@ -2,6 +2,9 @@ import { getAuth } from '@clerk/nextjs/server'
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next'
 import { AdminPanel } from '../components/admin/AdminPanel'
 import { Layout } from '../components/layout'
+import { Button } from '../components/form/Button'
+import { normalConsolelogAndThrow } from './testPage'
+import Link from 'next/link'
 
 const AdminPage = ({ orgRole }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const isAdmin = orgRole === 'admin'
@@ -17,6 +20,12 @@ const AdminPage = ({ orgRole }: InferGetServerSidePropsType<typeof getServerSide
   return (
     <Layout title='Parkering App'>
       <AdminPanel />
+      <Button variant='primary' onClick={normalConsolelogAndThrow}>
+        Run normalConsolelogAndThrow
+      </Button>
+      <Link href={'/testPage'}>
+        <Button variant='primary'>Run normalConsolelogAndThrow on server</Button>
+      </Link>
     </Layout>
   )
 }

@@ -28,14 +28,16 @@ yarn-error.log*
 # local env files
 .env*.local
 
+# grafbase
+/.grafbase/
+/grafbase/.env
+
+
 # vercel
 .vercel
 
 # typescript
 *.tsbuildinfo
-
-# env
-.env
 
 # graphql
 .graphqlconfig

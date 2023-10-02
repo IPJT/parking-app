@@ -33,13 +33,13 @@ export const VehicleAdderForm = ({ setIsExpanded }: { setIsExpanded: Dispatch<Se
     const vehicleData = { name: formData.Name, brand: formData.Brand, owner: userId }
 
     const queryParams = [
-      `client_id=${process.env.NEXT_PUBLIC_OAUTH_CLIENT_ID}`,
-      `app_id=${process.env.NEXT_PUBLIC_HM_APP_ID}`,
-      `redirect_uri=${process.env.NEXT_PUBLIC_REDIRECT_URI}`,
+      `client_id=${process.env.NEXT_PUBLIC_HIGH_MOBILITY_OAUTH_CLIENT_ID}`,
+      `app_id=${process.env.NEXT_PUBLIC_HIGH_MOBILITY_APP_ID}`,
+      `redirect_uri=${process.env.NEXT_PUBLIC_HIGH_MOBILITY_REDIRECT_URI}`,
       `state=${JSON.stringify(vehicleData)}`,
     ]
 
-    const redirectUrl = `${process.env.NEXT_PUBLIC_HM_AUTH_URI}?${queryParams.join('&')}`
+    const redirectUrl = `${process.env.NEXT_PUBLIC_HIGH_MOBILITY_AUTH_URI}?${queryParams.join('&')}`
     window.location.assign(redirectUrl)
   }
 

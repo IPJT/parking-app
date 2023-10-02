@@ -7,4 +7,12 @@ This repo was initiated by cloning this [example](https://github.com/grafbase/gr
 3. Run `npm run dev`, or `yarn dev` (in a new terminal)
 4. Visit [http://localhost:3000](http://localhost:3000)
 
-## Deployment
+## Production Deployment
+
+1. Push to main (This will deploy to Grafbase and Vercel)
+
+## Environment variables - NextJs
+
+- Put all secrets for NextJs in `.env.local` (dev) or in Vercel (prod)
+- Generic non secret env-variables are put in `.env` - Included in repo
+- Environment specific env-variables are put in `.env.development` or `.env.production` - Included in repo

@@ -32,7 +32,6 @@ yarn-error.log*
 /.grafbase/
 /grafbase/.env
 
-
 # vercel
 .vercel
 

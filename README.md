@@ -17,7 +17,6 @@ This repo was initiated by cloning this [example](https://github.com/grafbase/gr
 - Errors and messages will show up as [Issues](https://parking-app.sentry.io/issues/?environment=vercel-production) in Sentry. In order to move the out of the issues stream do one of the [following](https://docs.sentry.io/product/issues/states-triage/?original_referrer=https://docs.sentry.io/?original_referrer%3Dhttps%253A%252F%252Fdocs.sentry.io%252F):
   - Mark as resolved when it's been fixed
   - Set status to `Archived`
-  - Delete
 
 ## Production Deployment
 

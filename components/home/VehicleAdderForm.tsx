@@ -6,6 +6,7 @@ import { VehicleBrandEnum } from '../../utils/enums'
 import { Button } from '../form/Button'
 import { Input } from '../form/Input'
 import { Select } from '../form/Select'
+import { useRouter } from 'next/router'
 
 export interface IVehicleAdderFormValues {
   Name: string
@@ -18,6 +19,7 @@ const LABEL_STRINGS: { [Key in keyof IVehicleAdderFormValues]: string } = {
 }
 
 export const VehicleAdderForm = ({ setIsExpanded }: { setIsExpanded: Dispatch<SetStateAction<boolean>> }) => {
+  const router = useRouter()
   const { userId } = useAuth()
   const {
     register,
@@ -40,7 +42,7 @@ export const VehicleAdderForm = ({ setIsExpanded }: { setIsExpanded: Dispatch<Se
     ]
 
     const redirectUrl = `${process.env.NEXT_PUBLIC_HIGH_MOBILITY_AUTH_URI}?${queryParams.join('&')}`
-    window.location.assign(redirectUrl)
+    router.push(redirectUrl)
   }
 
   return (

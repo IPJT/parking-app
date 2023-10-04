@@ -21,7 +21,7 @@ const Home = ({ errorToast }: InferGetServerSidePropsType<typeof getServerSidePr
 
   return (
     <Layout title='Parkering App'>
-      <Toast open={openToast} setOpen={setOpenToast} toastErrorObject={toastErrorObject} />
+      {toastErrorObject && <Toast open={openToast} setOpen={setOpenToast} toastErrorObject={toastErrorObject} />}
       <VehicleSelector />
     </Layout>
   )

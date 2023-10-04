@@ -1,9 +1,10 @@
 import * as React from 'react'
 import * as RadixToast from '@radix-ui/react-toast'
 import styled, { keyframes } from 'styled-components'
-import { Dispatch, SetStateAction } from 'react'
+import { Dispatch, SetStateAction, useEffect } from 'react'
 import { theme } from '../styles/theme'
 import Image from 'next/image'
+import * as Sentry from '@sentry/nextjs'
 
 export type ToastErrorObject = {
   title: string
@@ -18,11 +19,11 @@ export const Toast = ({
 }: {
   open: boolean
   setOpen: Dispatch<SetStateAction<boolean>>
-  toastErrorObject?: ToastErrorObject
+  toastErrorObject: ToastErrorObject
 }) => {
-  if (!toastErrorObject) {
-    return null
-  }
+  useEffect(() => {
+    Sentry.captureMessage('Toast!!', { contexts: { toastErrorObject: { toastErrorObject } } })
+  }, [])
 
   const getToastRootBackgroundColor = (type: ToastErrorObject['type']) => {
     switch (type) {
@@ -35,7 +36,7 @@ export const Toast = ({
   }
 
   return (
-    <RadixToast.Provider swipeDirection='right' duration={15000}>
+    <RadixToast.Provider swipeDirection='right' duration={10000}>
       <StyledToastRoot
         open={open}
         onOpenChange={setOpen}

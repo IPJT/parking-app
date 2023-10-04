@@ -3,9 +3,11 @@ import { graphql } from '../../../__generated__'
 import { apolloClientOnServer } from '../../../clients/ApolloClientOnServer'
 import { exchangeAuthCodeWithToken, exchangeTokenWithVehicleInfo } from '../../../clients/HmOAuthApi'
 import { ERROR_TOASTS } from '../../../utils/enums'
+import * as Sentry from '@sentry/nextjs'
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   let errorToast: keyof typeof ERROR_TOASTS | null = null
+
   try {
     const {
       code: authCode,
@@ -59,14 +61,16 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       }
     }
   } catch (error: any) {
+    //TODO see this for typing of errors https://engineering.udacity.com/handling-errors-like-a-pro-in-typescript-d7a314ad4991
     errorToast = 'genericError'
-    console.log(error.message)
-    throw error //TODO-ian wtf do I do here? I need to log this! Include something traceable in all the log. E.g. userId + carName
+    Sentry.captureException(error)
+    await Sentry.flush(2000)
   } finally {
     if (errorToast) {
       res.redirect(`/?errorToast=${errorToast}`)
+    } else {
+      res.redirect(`/`)
     }
-    res.redirect(`/`)
   }
 }
 

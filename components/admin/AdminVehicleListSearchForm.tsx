@@ -7,6 +7,7 @@ import { Select } from '../form/Select'
 import styled from 'styled-components'
 
 export interface IAdminVehicleListSearchFormValues {
+  Vin?: string
   Name?: string
   Brand?: VehicleBrandEnum
   Owner?: string
@@ -33,6 +34,7 @@ export const AdminVehicleListSearchForm = ({
     searchObjectRef.current = data
     setIsModalOpen(false)
     refetch({
+      vin: data.Vin ? `(?i).*${data.Vin}.*` : '.*',
       name: data.Name ? `(?i).*${data.Name}.*` : '.*',
       brand: data.Brand ? `(?i).*${data.Brand}.*` : '.*',
       owner: data.Owner ? `(?i).*${data.Owner}.*` : '.*',
@@ -42,6 +44,7 @@ export const AdminVehicleListSearchForm = ({
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <div>
+        <Input<IAdminVehicleListSearchFormValues> label='Vin' register={register} errors={errors} />
         <Input<IAdminVehicleListSearchFormValues> label='Name' register={register} errors={errors} />
         <Select<IAdminVehicleListSearchFormValues>
           label='Brand'

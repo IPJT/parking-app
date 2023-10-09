@@ -1,4 +1,4 @@
-import { useQuery } from '@apollo/client'
+import { useMutation, useQuery } from '@apollo/client'
 import * as Dialog from '@radix-ui/react-dialog'
 import { MagnifyingGlassIcon } from '@radix-ui/react-icons'
 import { useRef, useState } from 'react'
@@ -9,10 +9,13 @@ import { Button } from '../form/Button'
 import { AdminVehicleItem } from './AdminVehicleItem'
 import { AdminVehicleListSearchForm, IAdminVehicleListSearchFormValues } from './AdminVehicleListSearchForm'
 import { Modal } from '../Modal'
+import { VehicleAdder_MutationDocument, VehicleDelete_MutationDocument } from '../../__generated__/graphql'
 
 export const AdminVehicleList = () => {
+  const [deleteVehicle] = useMutation(VehicleDelete_MutationDocument)
   const { data, loading, error, fetchMore, refetch } = useQuery(AdminVehicleList_Query, {
     variables: {
+      vin: '.*',
       name: '.*',
       brand: '.*',
       owner: '.*',
@@ -46,6 +49,7 @@ export const AdminVehicleList = () => {
         <tbody>
           <tr>
             <th>Nr.</th>
+            <th>Vin</th>
             <th>Name</th>
             <th>Brand</th>
             <th>Owner</th>
@@ -56,6 +60,16 @@ export const AdminVehicleList = () => {
               <tr key={vehicle.id}>
                 <td>{index + 1}</td>
                 <AdminVehicleItem vehicle={vehicle} />
+                <Button
+                  onClick={() => {
+                    deleteVehicle({ variables: { id: vehicle.id } })
+                    refetch()
+                  }}
+                  variant='secondary'
+                >
+                  {' '}
+                  Delete
+                </Button>
               </tr>
             )
           })}
@@ -106,11 +120,18 @@ const StyledTable = styled.table`
 `
 
 export const AdminVehicleList_Query = graphql(/* GraphQL */ `
-  query AdminVehicleList_Query($after: String, $name: String!, $brand: String!, $owner: String!) {
+  query AdminVehicleList_Query($after: String, $vin: String!, $name: String!, $brand: String!, $owner: String!) {
     vehicleSearch(
       first: 10
       after: $after
-      filter: { ALL: [{ name: { regex: $name } }, { brand: { regex: $brand } }, { owner: { regex: $owner } }] }
+      filter: {
+        ALL: [
+          { vin: { regex: $vin } }
+          { name: { regex: $name } }
+          { brand: { regex: $brand } }
+          { owner: { regex: $owner } }
+        ]
+      }
     ) {
       edges {
         node {
@@ -125,6 +146,14 @@ export const AdminVehicleList_Query = graphql(/* GraphQL */ `
         endCursor
         hasNextPage
       }
+    }
+  }
+`)
+
+const VehicleDelete_Mutation = graphql(/* GraphQL */ `
+  mutation VehicleDelete_Mutation($id: ID!) {
+    vehicleDelete(by: { id: $id }) {
+      deletedId
     }
   }
 `)

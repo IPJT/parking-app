@@ -9,6 +9,7 @@ export const AdminVehicleItem = (props: Props) => {
 
   return (
     <>
+      <td>{vehicle.vin}</td>
       <td>{vehicle.name}</td>
       <td>{vehicle.brand}</td>
       <td>{vehicle.owner}</td>
@@ -18,6 +19,7 @@ export const AdminVehicleItem = (props: Props) => {
 
 const AdminVehicleItem_VehicleFragment = graphql(/* GraphQL */ `
   fragment AdminVehicleItem_VehicleFragment on Vehicle {
+    vin
     name
     brand
     owner

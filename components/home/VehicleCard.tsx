@@ -16,7 +16,7 @@ export const VehicleCard = (props: Props) => {
   return (
     <GenericCard $borderColor={getBorderColor(vehicleStatus)}>
       <p>{vehicle.name}</p>
-      <Image src={`/${vehicle.brand}.svg`} alt='plus icon' width={70} height={70} />
+      <Image src={`/${vehicle.brand.toLowerCase()}.svg`} alt='plus icon' width={70} height={70} />
       <p>{getStatusString(vehicleStatus)}</p>
     </GenericCard>
   )

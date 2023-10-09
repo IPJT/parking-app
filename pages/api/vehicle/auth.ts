@@ -55,10 +55,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       if (errors.find((error) => error.message.match('is already taken on field "vin"'))) {
         errorToast = 'vehichleAlreadyExists'
       } else {
-        errors.forEach((error) => {
-          Sentry.captureException(error)
-        })
-        throw new Error(`${errors.length} error(s) returned from the VehicleAdder_Mutation`)
+        throw new Error(
+          `${errors.length} error(s) returned from the VehicleAdder_Mutation. Errors: ${JSON.stringify(errors)}`
+        )
       }
     }
   } catch (error: any) {

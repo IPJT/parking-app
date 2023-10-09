@@ -46,8 +46,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       accessTokensReponse: accessTokensReponseJson,
     }
 
-    console.log(process.env.GRAFBASE_X_API_KEY)
-
     const { errors } = await apolloClientOnServer.mutate({
       mutation: VehicleAdder_Mutation,
       variables: vehicleDataObject,

@@ -55,9 +55,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       if (errors.find((error) => error.message.match('is already taken on field "vin"'))) {
         errorToast = 'vehichleAlreadyExists'
       } else {
-        throw new Error(
-          `Car couldn't be saved to the DB. Here is the first of potentially more errors ${errors[0].toString()}}`
-        )
+        errors.forEach((error) => {
+          Sentry.captureException(error)
+        })
+        throw new Error(`${errors.length} error(s) returned from the VehicleAdder_Mutation`)
       }
     }
   } catch (error: any) {

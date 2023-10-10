@@ -6,6 +6,7 @@ import { VehicleCard_VehicleFragmentFragment } from '../../__generated__/graphql
 import { Modal } from '../Modal'
 import { Button } from '../form/Button'
 import { VehicleSelector_Query } from './VehicleSelector'
+import { getVehicleStatus, getVehicleStatusColor, getVehicleStatusString } from '../../utils/vehicleHelpers'
 
 type Props = {
   isModalOpen: boolean
@@ -15,6 +16,8 @@ type Props = {
 
 export const VehicleModal = ({ isModalOpen, setIsModalOpen, vehicle }: Props) => {
   const [deleteVehicle] = useMutation(VehicleDelete_Mutation, { refetchQueries: [VehicleSelector_Query] })
+  const vehicleStatus = getVehicleStatus(vehicle)
+
   return (
     <Modal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} title={vehicle.name}>
       <b>Vin: </b>
@@ -22,6 +25,9 @@ export const VehicleModal = ({ isModalOpen, setIsModalOpen, vehicle }: Props) =>
       <br />
       <b>Bilmärke: </b>
       <span>{vehicle.brand}</span>
+      <br />
+      <b>Status: </b>
+      <StyledSpan $color={getVehicleStatusColor(vehicleStatus)}>{getVehicleStatusString(vehicleStatus)}</StyledSpan>
       <ButtonWrapper>
         <Button
           variant='danger'
@@ -41,6 +47,10 @@ export const VehicleModal = ({ isModalOpen, setIsModalOpen, vehicle }: Props) =>
     </Modal>
   )
 }
+
+const StyledSpan = styled.span<{ $color: string }>`
+  color: ${(props) => props.$color};
+`
 
 const ButtonWrapper = styled.div`
   margin-top: 1.5rem;

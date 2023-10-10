@@ -1,10 +1,8 @@
 import Image from 'next/image'
+import { useState } from 'react'
 import styled from 'styled-components'
 import { FragmentType, graphql, useFragment } from '../../__generated__'
-import { theme } from '../../styles/theme'
-import { getVehicleStatus } from '../../utils/getVehicleStatus'
-import { VehicleStatusEnum } from '../../utils/enums'
-import { useState } from 'react'
+import { getVehicleStatusColor, getVehicleStatusString, getVehicleStatus } from '../../utils/vehicleHelpers'
 import { VehicleModal } from './VehicleModal'
 
 type Props = {
@@ -18,10 +16,10 @@ export const VehicleCard = (props: Props) => {
 
   return (
     <>
-      <GenericCard $borderColor={getBorderColor(vehicleStatus)} onClick={() => setIsVehicleModalOpen(true)}>
+      <GenericCard $borderColor={getVehicleStatusColor(vehicleStatus)} onClick={() => setIsVehicleModalOpen(true)}>
         <p>{vehicle.name}</p>
         <Image src={`/${vehicle.brand.toLowerCase()}.svg`} alt='plus icon' width={70} height={70} />
-        <p>{getStatusString(vehicleStatus)}</p>
+        <p>{getVehicleStatusString(vehicleStatus)}</p>
       </GenericCard>
       <VehicleModal isModalOpen={isVehicleModalOpen} setIsModalOpen={setIsVehicleModalOpen} vehicle={vehicle} />
     </>
@@ -57,23 +55,3 @@ export const GenericCard = styled.div<{ $borderColor: string }>`
     box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3);
   }
 `
-
-function getBorderColor(vehicleStatus: VehicleStatusEnum) {
-  switch (vehicleStatus) {
-    case VehicleStatusEnum.pending:
-      return theme.colors.semantics.warning
-
-    case VehicleStatusEnum.approved:
-      return theme.colors.semantics.success
-  }
-}
-
-function getStatusString(vehicleStatus: VehicleStatusEnum) {
-  switch (vehicleStatus) {
-    case VehicleStatusEnum.pending:
-      return 'Väntar på godkännande'
-
-    case VehicleStatusEnum.approved:
-      return 'Godkänd'
-  }
-}

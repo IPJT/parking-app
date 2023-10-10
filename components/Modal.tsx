@@ -32,7 +32,7 @@ const StyledDialogOverlay = styled(Dialog.Overlay)`
 
 const StyledDialogContent = styled(Dialog.Content)`
   background-color: ${theme.colors.scheme.darkAccent};
-  border-radius: 6px;
+  border-radius: 10px;
   position: fixed;
   top: 50%;
   left: 50%;

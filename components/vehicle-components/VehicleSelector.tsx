@@ -7,7 +7,7 @@ import { VehicleCard } from './VehicleCard'
 
 export const VehicleSelector = () => {
   const { userId } = useAuth()
-  const { error, loading, data } = useQuery(VechicleSelector_Query, {
+  const { error, loading, data } = useQuery(VehicleSelector_Query, {
     variables: { first: 100, owner: userId as string },
     skip: !userId,
   })
@@ -38,8 +38,8 @@ const CardContainer = styled.div`
   gap: 1rem;
 `
 
-export const VechicleSelector_Query = graphql(/* GraphQL */ `
-  query VechicleSelector_Query($first: Int!, $owner: String!) {
+export const VehicleSelector_Query = graphql(/* GraphQL */ `
+  query VehicleSelector_Query($first: Int!, $owner: String!) {
     vehicleSearch(first: $first, filter: { owner: { eq: $owner } }) {
       edges {
         node {

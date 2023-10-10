@@ -1,18 +1,16 @@
 import { useMutation, useQuery } from '@apollo/client'
-import * as Dialog from '@radix-ui/react-dialog'
 import { MagnifyingGlassIcon } from '@radix-ui/react-icons'
 import { useRef, useState } from 'react'
 import styled from 'styled-components'
 import { graphql } from '../../__generated__'
 import { theme } from '../../styles/theme'
+import { Modal } from '../Modal'
 import { Button } from '../form/Button'
 import { AdminVehicleItem } from './AdminVehicleItem'
 import { AdminVehicleListSearchForm, IAdminVehicleListSearchFormValues } from './AdminVehicleListSearchForm'
-import { Modal } from '../Modal'
-import { VehicleAdder_MutationDocument, VehicleDelete_MutationDocument } from '../../__generated__/graphql'
 
 export const AdminVehicleList = () => {
-  const [deleteVehicle] = useMutation(VehicleDelete_MutationDocument)
+  const [deleteVehicle] = useMutation(VehicleDelete_Mutation)
   const { data, loading, error, fetchMore, refetch } = useQuery(AdminVehicleList_Query, {
     variables: {
       vin: '.*',
@@ -65,7 +63,7 @@ export const AdminVehicleList = () => {
                     deleteVehicle({ variables: { id: vehicle.id } })
                     refetch()
                   }}
-                  variant='secondary'
+                  variant='danger'
                 >
                   {' '}
                   Delete

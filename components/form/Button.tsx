@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { theme } from '../../styles/theme'
 
-type ButtonTypes = 'primary' | 'secondary'
+type ButtonTypes = 'primary' | 'secondary' | 'danger'
 
 interface Props extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   variant: ButtonTypes
@@ -20,6 +20,9 @@ const handleColorType = (color: ButtonTypes) => {
 
     case 'secondary':
       return theme.colors.grey
+
+    case 'danger':
+      return theme.colors.semantics.danger
   }
 }
 

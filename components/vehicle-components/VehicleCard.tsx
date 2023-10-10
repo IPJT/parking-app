@@ -4,21 +4,27 @@ import { FragmentType, graphql, useFragment } from '../../__generated__'
 import { theme } from '../../styles/theme'
 import { getVehicleStatus } from '../../utils/getVehicleStatus'
 import { VehicleStatusEnum } from '../../utils/enums'
+import { useState } from 'react'
+import { VehicleModal } from './VehicleModal'
 
 type Props = {
   vehicle: FragmentType<typeof VehicleCard_VehicleFragment>
 }
 
 export const VehicleCard = (props: Props) => {
+  const [isVehicleModalOpen, setIsVehicleModalOpen] = useState(false)
   const vehicle = useFragment(VehicleCard_VehicleFragment, props.vehicle)
   const vehicleStatus = getVehicleStatus(vehicle)
 
   return (
-    <GenericCard $borderColor={getBorderColor(vehicleStatus)}>
-      <p>{vehicle.name}</p>
-      <Image src={`/${vehicle.brand.toLowerCase()}.svg`} alt='plus icon' width={70} height={70} />
-      <p>{getStatusString(vehicleStatus)}</p>
-    </GenericCard>
+    <>
+      <GenericCard $borderColor={getBorderColor(vehicleStatus)} onClick={() => setIsVehicleModalOpen(true)}>
+        <p>{vehicle.name}</p>
+        <Image src={`/${vehicle.brand.toLowerCase()}.svg`} alt='plus icon' width={70} height={70} />
+        <p>{getStatusString(vehicleStatus)}</p>
+      </GenericCard>
+      <VehicleModal isModalOpen={isVehicleModalOpen} setIsModalOpen={setIsVehicleModalOpen} vehicle={vehicle} />
+    </>
   )
 }
 
@@ -28,6 +34,7 @@ const VehicleCard_VehicleFragment = graphql(/* GraphQL */ `
     name
     brand
     accessTokensReponse
+    vin
   }
 `)
 

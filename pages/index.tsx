@@ -1,5 +1,5 @@
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next'
-import { VehicleSelector } from '../components/home/VehicleSelector'
+import { VehicleSelector } from '../components/vehicle-components/VehicleSelector'
 import { Layout } from '../components/layout'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'

@@ -22,3 +22,7 @@ export const ERROR_TOASTS: { [key: string]: ToastErrorObject } = {
     type: 'error',
   },
 }
+
+export enum CheckParkedLegallyTime {
+  PM20 = 'PM20',
+}

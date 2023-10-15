@@ -15,9 +15,8 @@ export const VehicleSelector = () => {
   if (loading || !userId) {
     return <p>loading</p>
   }
-
   if (error) {
-    return <p>{error.message}</p>
+    throw error
   }
 
   return (

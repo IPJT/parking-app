@@ -1,7 +1,7 @@
 import { authMiddleware } from '@clerk/nextjs'
 
 export default authMiddleware({
-  ignoredRoutes: ['/api/vehicle/auth'],
+  ignoredRoutes: ['/api/vehicle/auth', '/api/vehicle/location'],
 })
 
 export const config = {

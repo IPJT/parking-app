@@ -1,4 +1,4 @@
-async function exchangeAuthCodeWithToken(authCode: string) {
+async function exchangeAuthCodeWithAccessToken(authCode: string) {
   const response = await fetch(`${process.env.HIGH_MOBILITY_OAUTH_BASE_URI}/access_tokens`, {
     method: 'POST',
     headers: {
@@ -16,16 +16,33 @@ async function exchangeAuthCodeWithToken(authCode: string) {
   return response
 }
 
-async function exchangeTokenWithVehicleInfo(token: string) {
+async function refreshAccessToken(refreshToken: string) {
+  const response = await fetch(`${process.env.HIGH_MOBILITY_OAUTH_BASE_URI}/access_tokens`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      grant_type: 'refresh_token',
+      refresh_token: refreshToken,
+      client_id: process.env.NEXT_PUBLIC_HIGH_MOBILITY_OAUTH_CLIENT_ID,
+      client_secret: process.env.HIGH_MOBILITY_OAUTH_CLIENT_SECRET,
+    }),
+  })
+
+  return response
+}
+
+async function exchangeAccessTokenWithVehicleInfo(accessToken: string) {
   const response = await fetch(`${process.env.HIGH_MOBILITY_OAUTH_BASE_URI}/vehicleinfo`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
-      Authorization: `Bearer ${token}`,
+      Authorization: `Bearer ${accessToken}`,
     },
   })
 
   return response
 }
 
-export { exchangeAuthCodeWithToken, exchangeTokenWithVehicleInfo }
+export { exchangeAuthCodeWithAccessToken, exchangeAccessTokenWithVehicleInfo, refreshAccessToken }

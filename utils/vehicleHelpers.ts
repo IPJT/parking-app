@@ -3,9 +3,9 @@ import { theme } from '../styles/theme'
 import { VehicleStatusEnum } from './enums'
 
 export function getVehicleStatus(vehicle: VehicleCard_VehicleFragmentFragment) {
-  const accessTokensReponse = vehicle.accessTokensReponse //todo add zod-validation
+  const accessTokensResponse = vehicle.accessTokensResponse //todo add zod-validation
 
-  switch (accessTokensReponse.status) {
+  switch (accessTokensResponse.status) {
     case 'pending':
       return VehicleStatusEnum.pending
 
@@ -13,7 +13,7 @@ export function getVehicleStatus(vehicle: VehicleCard_VehicleFragmentFragment) {
       return VehicleStatusEnum.approved
 
     default:
-      throw new Error(`Unvalid accessTokensReponse.status for vehicle with ID: ${vehicle.id}`)
+      throw new Error(`Unvalid accessTokensResponse.status for vehicle with ID: ${vehicle.id}`)
   }
 }
 

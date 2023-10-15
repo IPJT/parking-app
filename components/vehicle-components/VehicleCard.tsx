@@ -31,7 +31,7 @@ const VehicleCard_VehicleFragment = graphql(/* GraphQL */ `
     id
     name
     brand
-    accessTokensReponse
+    accessTokensResponse
     vin
   }
 `)

@@ -1,9 +1,9 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 import { graphql } from '../../../__generated__'
 import { apolloClientOnServer } from '../../../clients/ApolloClientOnServer'
-import { exchangeAuthCodeWithToken, exchangeTokenWithVehicleInfo } from '../../../clients/HmOAuthApi'
 import { ERROR_TOASTS } from '../../../utils/enums'
 import * as Sentry from '@sentry/nextjs'
+import { exchangeAccessTokenWithVehicleInfo, exchangeAuthCodeWithAccessToken } from '../../../clients/HmOAuthApi'
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   let errorToast: keyof typeof ERROR_TOASTS | null = null
@@ -25,7 +25,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       throw new Error(`No authCode was received from HM. Error from HM: ${authError}`)
     }
 
-    const tokenResponse = await exchangeAuthCodeWithToken(authCode)
+    console.log({ authCode })
+
+    const tokenResponse = await exchangeAuthCodeWithAccessToken(authCode)
 
     if (tokenResponse.status !== 200) {
       throw new Error(
@@ -33,17 +35,16 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       )
     }
 
-    const accessTokensReponseJson = await tokenResponse.json() //TODO. Use zod to verify there is a accessToken in the response
+    const accessTokensResponseJson = await tokenResponse.json() //TODO. Use zod to verify there is a accessToken in the response
 
     //use Token to obtain vin through the vehicle-info api
-    const vehicleInfoResponse = await exchangeTokenWithVehicleInfo(accessTokensReponseJson['access_token'])
+    const vehicleInfoResponse = await exchangeAccessTokenWithVehicleInfo(accessTokensResponseJson['access_token'])
     const vehicleInfoResponseJson = await vehicleInfoResponse.json() // We need to verify this response
 
-    //If we get an error for duplicate VINS, tell it to the user! If this happens. It seems like an error is thrown rather than populating the errors var
     const vehicleDataObject = {
       vin: vehicleInfoResponseJson.vin,
       ...partialVehicleDataObject,
-      accessTokensReponse: accessTokensReponseJson,
+      accessTokensResponse: accessTokensResponseJson,
     }
 
     const { errors } = await apolloClientOnServer.mutate({
@@ -81,10 +82,10 @@ const VehicleAdder_Mutation = graphql(/* GraphQL */ `
     $owner: String!
     $name: String!
     $brand: String!
-    $accessTokensReponse: JSON!
+    $accessTokensResponse: JSON!
   ) {
     vehicleCreate(
-      input: { vin: $vin, owner: $owner, name: $name, brand: $brand, accessTokensReponse: $accessTokensReponse }
+      input: { vin: $vin, owner: $owner, name: $name, brand: $brand, accessTokensResponse: $accessTokensResponse }
     ) {
       vehicle {
         vin

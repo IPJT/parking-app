@@ -8,9 +8,9 @@ type Vehicle @model @search {
   brand: String!
   owner: String!
   accessTokensResponse: JSON!
-  checkParkedLegallyAt: [CheckParkedLegallyTime!]! @default(value: [PM20])
+  verifyParkingTimeArray: [VerifyParkingTime!]! @default(value: [PM20])
 }
 
-enum CheckParkedLegallyTime {
+enum VerifyParkingTime {
   PM20
 }

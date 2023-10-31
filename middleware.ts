@@ -1,7 +1,7 @@
 import { authMiddleware } from '@clerk/nextjs'
 
 export default authMiddleware({
-  ignoredRoutes: ['/api/vehicle/auth', '/api/vehicle/location'],
+  ignoredRoutes: ['/api/vehicle/auth', '/api/vehicle/verify-parkings'], //TODO-ian - verify-parkings must be secured
 })
 
 export const config = {

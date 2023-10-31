@@ -19,7 +19,8 @@ const documents = {
     "\n  fragment VehicleCard_VehicleFragment on Vehicle {\n    id\n    name\n    brand\n    accessTokensResponse\n    vin\n  }\n": types.VehicleCard_VehicleFragmentFragmentDoc,
     "\n  query VehicleSelector_Query($first: Int!, $owner: String!) {\n    vehicleSearch(first: $first, filter: { owner: { eq: $owner } }) {\n      edges {\n        node {\n          ...VehicleCard_VehicleFragment\n          id\n        }\n      }\n    }\n  }\n": types.VehicleSelector_QueryDocument,
     "\n  mutation VehicleAdder_Mutation(\n    $vin: String!\n    $owner: String!\n    $name: String!\n    $brand: String!\n    $accessTokensResponse: JSON!\n  ) {\n    vehicleCreate(\n      input: { vin: $vin, owner: $owner, name: $name, brand: $brand, accessTokensResponse: $accessTokensResponse }\n    ) {\n      vehicle {\n        vin\n        id\n      }\n    }\n  }\n": types.VehicleAdder_MutationDocument,
-    "\n  query VehicleSearch_Query($time: String!) {\n    vehicleSearch(first: 100, query: $time, fields: [\"checkParkedLegallyAt\"]) {\n      edges {\n        node {\n          vin\n          owner\n          accessTokensResponse\n        }\n      }\n      searchInfo {\n        totalHits\n      }\n    }\n  }\n": types.VehicleSearch_QueryDocument,
+    "\n  query VehicleSearch_Query($time: String!) {\n    vehicleSearch(first: 100, query: $time, fields: [\"verifyParkingTimeArray\"]) {\n      edges {\n        node {\n          vin\n          owner\n          accessTokensResponse\n        }\n      }\n      searchInfo {\n        totalHits\n      }\n    }\n  }\n": types.VehicleSearch_QueryDocument,
+    "\n  mutation ModifyAccessTokensResponseOnVehicle_Mutation($vin: String!, $newAccessTokensResponse: JSON!) {\n    vehicleUpdate(by: { vin: $vin }, input: { accessTokensResponse: $newAccessTokensResponse }) {\n      vehicle {\n        id\n      }\n    }\n  }\n": types.ModifyAccessTokensResponseOnVehicle_MutationDocument,
 };
 
 /**
@@ -63,7 +64,11 @@ export function graphql(source: "\n  mutation VehicleAdder_Mutation(\n    $vin: 
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "\n  query VehicleSearch_Query($time: String!) {\n    vehicleSearch(first: 100, query: $time, fields: [\"checkParkedLegallyAt\"]) {\n      edges {\n        node {\n          vin\n          owner\n          accessTokensResponse\n        }\n      }\n      searchInfo {\n        totalHits\n      }\n    }\n  }\n"): (typeof documents)["\n  query VehicleSearch_Query($time: String!) {\n    vehicleSearch(first: 100, query: $time, fields: [\"checkParkedLegallyAt\"]) {\n      edges {\n        node {\n          vin\n          owner\n          accessTokensResponse\n        }\n      }\n      searchInfo {\n        totalHits\n      }\n    }\n  }\n"];
+export function graphql(source: "\n  query VehicleSearch_Query($time: String!) {\n    vehicleSearch(first: 100, query: $time, fields: [\"verifyParkingTimeArray\"]) {\n      edges {\n        node {\n          vin\n          owner\n          accessTokensResponse\n        }\n      }\n      searchInfo {\n        totalHits\n      }\n    }\n  }\n"): (typeof documents)["\n  query VehicleSearch_Query($time: String!) {\n    vehicleSearch(first: 100, query: $time, fields: [\"verifyParkingTimeArray\"]) {\n      edges {\n        node {\n          vin\n          owner\n          accessTokensResponse\n        }\n      }\n      searchInfo {\n        totalHits\n      }\n    }\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n  mutation ModifyAccessTokensResponseOnVehicle_Mutation($vin: String!, $newAccessTokensResponse: JSON!) {\n    vehicleUpdate(by: { vin: $vin }, input: { accessTokensResponse: $newAccessTokensResponse }) {\n      vehicle {\n        id\n      }\n    }\n  }\n"): (typeof documents)["\n  mutation ModifyAccessTokensResponseOnVehicle_Mutation($vin: String!, $newAccessTokensResponse: JSON!) {\n    vehicleUpdate(by: { vin: $vin }, input: { accessTokensResponse: $newAccessTokensResponse }) {\n      vehicle {\n        id\n      }\n    }\n  }\n"];
 
 export function graphql(source: string) {
   return (documents as any)[source] ?? {};

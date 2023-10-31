@@ -52,6 +52,5 @@ export const GenericCard = styled.div<{ $borderColor: string }>`
   &:hover {
     cursor: pointer;
     transform: scale(1.01);
-    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3);
   }
 `

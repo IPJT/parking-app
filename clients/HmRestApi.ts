@@ -34,7 +34,7 @@ function createJwt(accessToken: string) {
 export async function fetchVehicleLocation(accessToken: string) {
   const jwt = createJwt(accessToken)
 
-  const response = await fetch(`https://sandbox.rest-api.high-mobility.com/v5/vehicle_location`, {
+  const response = await fetch(`${HIGH_MOBILITY_REST_API_URI}`, {
     method: 'GET',
     headers: {
       Authorization: `Bearer ${jwt}`,

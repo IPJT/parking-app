@@ -11,6 +11,7 @@ export default async function handler(request: NextApiRequest, response: NextApi
   const { data, errors } = await apolloClientOnServer.query({
     query: VehicleSearch_Query,
     variables: { time },
+    fetchPolicy: 'network-only',
   })
 
   if (errors) {

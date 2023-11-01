@@ -1,5 +1,5 @@
 async function exchangeAuthCodeWithAccessToken(authCode: string) {
-  const response = await fetch(`${process.env.HIGH_MOBILITY_OAUTH_BASE_URI}/access_tokens`, {
+  const response = await fetch(`${process.env.HIGH_MOBILITY_REST_API_URI}/v1/access_tokens`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -17,7 +17,7 @@ async function exchangeAuthCodeWithAccessToken(authCode: string) {
 }
 
 async function refreshAccessToken(refreshToken: string) {
-  const response = await fetch(`${process.env.HIGH_MOBILITY_OAUTH_BASE_URI}/access_tokens`, {
+  const response = await fetch(`${process.env.HIGH_MOBILITY_REST_API_URI}/v1/access_tokens`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -34,7 +34,7 @@ async function refreshAccessToken(refreshToken: string) {
 }
 
 async function exchangeAccessTokenWithVehicleInfo(accessToken: string) {
-  const response = await fetch(`${process.env.HIGH_MOBILITY_OAUTH_BASE_URI}/vehicleinfo`, {
+  const response = await fetch(`${process.env.HIGH_MOBILITY_REST_API_URI}/v1/vehicleinfo`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',

@@ -1,16 +1,12 @@
 import { fetchVehicleLocation } from '../../../clients/HmRestApi'
-import { Location, VehicleFragment, refreshAccessTokenAndSaveToDB } from './helpers'
+import { VehicleFragment, refreshAccessTokenAndSaveToDB } from './helpers'
 
-export async function getVehicleLocation(vehicle: VehicleFragment): Promise<Location> {
+export async function getVehicleLocation(vehicle: VehicleFragment) {
   //Use refresh token to obtain new accessTokensResponse
 
   const accessToken = await refreshAccessTokenAndSaveToDB(vehicle)
 
-  console.log(accessToken)
+  const vehicleLocation = await fetchVehicleLocation({ vin: vehicle.vin, accessToken }) //TODO -save vehicleLocation to DB
 
-  const vehicleLocation = fetchVehicleLocation(accessToken)
-
-  return { x: '1', y: '2' }
-
-  //Write accessTokensResponseJson and location to DB
+  return vehicleLocation
 }

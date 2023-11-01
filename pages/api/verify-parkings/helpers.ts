@@ -5,8 +5,6 @@ import { graphql } from '../../../__generated__'
 
 export type VehicleFragment = NonNullable<VehicleSearch_QueryQuery['vehicleSearch']>['edges'][number]['node']
 
-export type Location = { x: string; y: string }
-
 export async function refreshAccessTokenAndSaveToDB(vehicle: VehicleFragment) {
   const tokenResponse = await refreshAccessToken(vehicle.accessTokensResponse['refresh_token'])
   if (tokenResponse.status !== 200) {

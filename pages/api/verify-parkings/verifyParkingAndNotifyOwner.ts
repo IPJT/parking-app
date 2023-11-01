@@ -12,6 +12,8 @@ async function verifyParkingAndNotifyOwner(vehicle: VehicleFragment): Promise<Ve
   try {
     const vehicleLocation = await getVehicleLocation(vehicle)
 
+    console.log(vehicleLocation)
+
     const isVehicleParkedLegally = await verifyParking(vehicleLocation)
 
     if (!isVehicleParkedLegally) {

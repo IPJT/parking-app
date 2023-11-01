@@ -48,7 +48,7 @@ export const GenericCard = styled.div<{ $borderColor: string }>`
   justify-content: space-between;
   align-items: center;
   padding: 1rem;
-  transition: transform 0.2s, box-shadow 0.2s;
+  transition: transform 0.2s;
   &:hover {
     cursor: pointer;
     transform: scale(1.01);

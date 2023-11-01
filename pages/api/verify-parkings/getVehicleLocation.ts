@@ -1,7 +1,7 @@
-import { graphql } from '../../../../__generated__'
-import { apolloClientOnServer } from '../../../../clients/ApolloClientOnServer'
-import { refreshAccessToken } from '../../../../clients/HmOAuthApi'
-import { fetchVehicleLocation } from '../../../../clients/HmRestApi'
+import { graphql } from '../../../__generated__'
+import { apolloClientOnServer } from '../../../clients/ApolloClientOnServer'
+import { refreshAccessToken } from '../../../clients/HmOAuthApi'
+import { fetchVehicleLocation } from '../../../clients/HmRestApi'
 import { Location, VehicleFragment } from './helpers'
 
 export async function getVehicleLocation(vehicle: VehicleFragment): Promise<Location> {

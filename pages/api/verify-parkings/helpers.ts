@@ -1,4 +1,4 @@
-import { VehicleSearch_QueryQuery } from '../../../../__generated__/graphql'
+import { VehicleSearch_QueryQuery } from '../../../__generated__/graphql'
 
 export type VehicleFragment = NonNullable<VehicleSearch_QueryQuery['vehicleSearch']>['edges'][number]['node']
 

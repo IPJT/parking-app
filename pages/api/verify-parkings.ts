@@ -1,8 +1,8 @@
 import * as Sentry from '@sentry/nextjs'
 import { NextApiRequest, NextApiResponse } from 'next'
-import { graphql } from '../../../__generated__'
-import { apolloClientOnServer } from '../../../clients/ApolloClientOnServer'
-import { CheckParkedLegallyTime } from '../../../utils/enums'
+import { graphql } from '../../__generated__'
+import { apolloClientOnServer } from '../../clients/ApolloClientOnServer'
+import { CheckParkedLegallyTime } from '../../utils/enums'
 import { verifyParkingAndNotifyOwner } from './verify-parkings/verifyParkingAndNotifyOwner'
 
 export default async function handler(request: NextApiRequest, response: NextApiResponse) {

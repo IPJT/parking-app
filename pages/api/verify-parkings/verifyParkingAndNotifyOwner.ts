@@ -1,7 +1,7 @@
+import { getMillisecondsUntilIllegalParking } from './getMillisecondsUntilIllegalParking'
 import { getVehicleLocation } from './getVehicleLocation'
 import { VehicleFragment } from './helpers/refreshAccessTokenAndSaveToDB'
 import { notifyOwner } from './notifyOwner'
-import { checkIfParkedLegally } from './verifyParking'
 import * as Sentry from '@sentry/nextjs'
 
 type VerifyParkingAndNotifyOwnerResponse = {
@@ -12,9 +12,9 @@ async function verifyParkingAndNotifyOwner(vehicle: VehicleFragment): Promise<Ve
   try {
     const vehicleLocation = await getVehicleLocation(vehicle)
 
-    const isVehicleParkedLegally = await checkIfParkedLegally(vehicleLocation)
+    const millisecondsUntilIllegalParking = await getMillisecondsUntilIllegalParking(vehicleLocation)
 
-    if (!isVehicleParkedLegally) {
+    if (millisecondsUntilIllegalParking < 24 * 60 * 60 * 1000) {
       await notifyOwner(vehicle)
     }
 

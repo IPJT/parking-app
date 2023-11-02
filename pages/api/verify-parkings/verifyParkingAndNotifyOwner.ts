@@ -1,7 +1,7 @@
 import { getVehicleLocation } from './getVehicleLocation'
 import { VehicleFragment } from './helpers'
 import { notifyOwner } from './notifyOwner'
-import { verifyParking } from './verifyParking'
+import { checkIfParkedLegally } from './verifyParking'
 import * as Sentry from '@sentry/nextjs'
 
 type VerifyParkingAndNotifyOwnerResponse = {
@@ -14,7 +14,7 @@ async function verifyParkingAndNotifyOwner(vehicle: VehicleFragment): Promise<Ve
 
     console.log(vehicleLocation)
 
-    const isVehicleParkedLegally = await verifyParking(vehicleLocation)
+    const isVehicleParkedLegally = await checkIfParkedLegally(vehicleLocation)
 
     if (!isVehicleParkedLegally) {
       await notifyOwner(vehicle)

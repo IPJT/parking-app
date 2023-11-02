@@ -23,6 +23,16 @@
           "uriFormat": "%s",
           "action": "debugWithChrome"
         }
+      },
+      {
+        "name": "Debug Jest Tests",
+        "type": "node",
+        "request": "launch",
+        "runtimeVersion": "18",
+        "runtimeExecutable": "${workspaceFolder}/node_modules/.bin/jest",
+        "args": ["--runInBand"],
+        "console": "integratedTerminal",
+        "internalConsoleOptions": "neverOpen"
       }
     ]
   }

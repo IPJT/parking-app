@@ -1,5 +1,5 @@
 import { fetchVehicleLocation } from '../../../clients/HmRestApi'
-import { VehicleFragment, refreshAccessTokenAndSaveToDB } from './helpers'
+import { VehicleFragment, refreshAccessTokenAndSaveToDB } from './helpers/refreshAccessTokenAndSaveToDB'
 
 export async function getVehicleLocation(vehicle: VehicleFragment) {
   //Use refresh token to obtain new accessTokensResponse

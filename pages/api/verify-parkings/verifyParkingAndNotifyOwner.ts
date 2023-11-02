@@ -1,5 +1,5 @@
 import { getVehicleLocation } from './getVehicleLocation'
-import { VehicleFragment } from './helpers'
+import { VehicleFragment } from './helpers/refreshAccessTokenAndSaveToDB'
 import { notifyOwner } from './notifyOwner'
 import { checkIfParkedLegally } from './verifyParking'
 import * as Sentry from '@sentry/nextjs'

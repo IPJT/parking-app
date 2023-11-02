@@ -1,7 +1,7 @@
-import { VehicleSearch_QueryQuery } from '../../../__generated__/graphql'
-import { apolloClientOnServer } from '../../../clients/ApolloClientOnServer'
-import { refreshAccessToken } from '../../../clients/HmOAuthApi'
-import { graphql } from '../../../__generated__'
+import { VehicleSearch_QueryQuery } from '../../../../__generated__/graphql'
+import { apolloClientOnServer } from '../../../../clients/ApolloClientOnServer'
+import { refreshAccessToken } from '../../../../clients/HmOAuthApi'
+import { graphql } from '../../../../__generated__'
 
 export type VehicleFragment = NonNullable<VehicleSearch_QueryQuery['vehicleSearch']>['edges'][number]['node']
 

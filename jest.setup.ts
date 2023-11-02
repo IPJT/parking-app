@@ -1,10 +1,10 @@
-import { Config } from 'jest'
-import nextJest from 'next/jest'
+/**
+ * For a detailed explanation regarding each configuration property, visit:
+ * https://jestjs.io/docs/configuration
+ */
 
-// Providing the path to your Next.js app which will enable loading next.config.js and .env files
-const createJestConfig = nextJest({ dir: './' })
+import type { Config } from 'jest'
 
-// Any custom config you want to pass to Jest
 const config: Config = {
   // All imported modules in your tests should be mocked automatically
   // automock: false,
@@ -19,7 +19,7 @@ const config: Config = {
   // clearMocks: false,
 
   // Indicates whether the coverage information should be collected while executing the test
-  collectCoverage: false,
+  collectCoverage: true,
 
   // An array of glob patterns indicating a set of files for which coverage information should be collected
   // collectCoverageFrom: undefined,
@@ -196,5 +196,4 @@ const config: Config = {
   // watchman: true,
 }
 
-// createJestConfig is exported in this way to ensure that next/jest can load the Next.js configuration, which is async
-module.exports = createJestConfig(config)
+export default config

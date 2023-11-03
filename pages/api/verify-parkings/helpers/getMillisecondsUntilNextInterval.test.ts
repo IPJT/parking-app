@@ -1,16 +1,12 @@
 import { getMillisecondsUntilNextInterval } from './getMillisecondsUntilNextInterval'
 
+jest.useFakeTimers()
+
 describe('getMillisecondsUntilNextInterval', () => {
   const _Date = Date
 
   it('should return 0 if current time is within the interval', () => {
-    const currentDate = new Date('2022-02-14T09:30:00') // Monday
-    jest.spyOn(global, 'Date').mockImplementation((date) => {
-      if (date) {
-        return new _Date(date)
-      }
-      return currentDate
-    })
+    jest.setSystemTime(new Date('2022-02-14T09:30:00')) // Monday
 
     const input = {
       START_WEEKDAY: 'Måndag',
@@ -23,13 +19,8 @@ describe('getMillisecondsUntilNextInterval', () => {
   })
 
   it('should return the correct number of milliseconds until the next interval', () => {
-    const currentDate = new Date('2022-02-15T08:30:00') // Tuesday
-    jest.spyOn(global, 'Date').mockImplementation((date) => {
-      if (date) {
-        return new _Date(date)
-      }
-      return currentDate
-    })
+    jest.setSystemTime(new Date('2022-02-15T08:30:00')) // Tuesday
+
     const input = {
       START_WEEKDAY: 'tisdag',
       START_TIME: 900,
@@ -41,13 +32,8 @@ describe('getMillisecondsUntilNextInterval', () => {
   })
 
   it('should return the correct number of milliseconds until the next interval', () => {
-    const currentDate = new Date('2022-02-18T08:30:00') // fredag
-    jest.spyOn(global, 'Date').mockImplementation((date) => {
-      if (date) {
-        return new _Date(date)
-      }
-      return currentDate
-    })
+    jest.setSystemTime(new Date('2022-02-18T08:30:00')) // Friday
+
     const input = {
       START_WEEKDAY: 'söndag',
       START_TIME: 830,
@@ -59,13 +45,8 @@ describe('getMillisecondsUntilNextInterval', () => {
   })
 
   it('should return the correct number of milliseconds until the next interval', () => {
-    const currentDate = new Date('2022-02-16T17:30:00') // Wednesday
-    jest.spyOn(global, 'Date').mockImplementation((date) => {
-      if (date) {
-        return new _Date(date)
-      }
-      return currentDate
-    })
+    jest.setSystemTime(new Date('2022-02-16T17:30:00')) // Wednesday
+
     const input = {
       START_WEEKDAY: 'onsdag',
       START_TIME: 1700,

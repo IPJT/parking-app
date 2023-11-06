@@ -15,7 +15,7 @@ async function verifyParkingAndNotifyOwner(vehicle: VehicleFragment): Promise<Ve
     const millisecondsUntilIllegalParking = await getMillisecondsUntilIllegalParking(vehicleLocation)
 
     if (millisecondsUntilIllegalParking < 24 * 60 * 60 * 1000) {
-      await notifyOwner(vehicle)
+      await notifyOwner(vehicle, millisecondsUntilIllegalParking)
     }
 
     return {

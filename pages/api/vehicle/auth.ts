@@ -25,8 +25,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       throw new Error(`No authCode was received from HM. Error from HM: ${authError}`)
     }
 
-    console.log({ authCode })
-
     const tokenResponse = await exchangeAuthCodeWithAccessToken(authCode)
 
     if (tokenResponse.status !== 200) {

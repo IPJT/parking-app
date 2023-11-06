@@ -17,8 +17,6 @@ export function getDistanceToFeature(location: Coordinates, feature: Feature) {
     return closestDistance < currentDistance ? closestDistance : currentDistance
   }, Infinity)
 
-  console.log({ name: feature.properties.STREET_NAME, distance: distanceToClosestPointInFeature })
-
   return distanceToClosestPointInFeature
 }
 

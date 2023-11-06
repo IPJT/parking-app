@@ -3,7 +3,7 @@ import { Coordinates } from './HmRestApi'
 const apiUri = process.env.STOCKHOLM_PARKING_API_URI
 const apiKey = process.env.STOCKHOLM_PARKING_API_KEY
 
-export async function getServiceDaysCollection(location: Coordinates) {
+export async function getServiceDaysCollection(location: Coordinates, radius: number) {
   if (!apiUri || !apiKey) {
     throw new Error('getServiceDaysCollection failed due to environment variables not defined')
   }
@@ -52,7 +52,7 @@ export type Feature = {
   properties: Properties
 }
 
-type FeatureCollection = {
+export type FeatureCollection = {
   type: 'FeatureCollection'
   features: Feature[]
   totalFeatures: number

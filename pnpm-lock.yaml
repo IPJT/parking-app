@@ -29,6 +29,12 @@ dependencies:
   '@sentry/nextjs':
     specifier: ^7.77.0
     version: 7.77.0(next@14.0.1)(react@18.2.0)
+  '@types/geodesy':
+    specifier: ^2.2.7
+    version: 2.2.7
+  geodesy:
+    specifier: ^2.4.0
+    version: 2.4.0
   graphql:
     specifier: ^16.8.1
     version: 16.8.1
@@ -2832,6 +2838,10 @@ packages:
       '@types/serve-static': 1.15.2
     dev: false
 
+  /@types/geodesy@2.2.7:
+    resolution: {integrity: sha512-PdhRJWWGc2YaEi6jSj8/JiFXxUL/SM/RSdCqMG4Y0DuxXfIw3mkx/CA5+VkoFymqVjjRE7kllWTq+dzTDxiDiA==}
+    dev: false
+
   /@types/graceful-fs@4.1.8:
     resolution: {integrity: sha512-NhRH7YzWq8WiNKVavKPBmtLYZHxNY19Hh+az28O/phfp68CF45pMFud+ZzJ8ewnxnC5smIdF3dqFeiSUQ5I+pw==}
     dependencies:
@@ -4671,6 +4681,11 @@ packages:
   /gensync@1.0.0-beta.2:
     resolution: {integrity: sha512-3hN7NaskYvMDLQY55gnW3NQ+mesEAepTqlg+VEbj7zzqEMBVNhzcGYYeqFo/TlYz6eQiFcp1HcsCZO+nGgS8zg==}
     engines: {node: '>=6.9.0'}
+
+  /geodesy@2.4.0:
+    resolution: {integrity: sha512-tHjQ1sXq8UAIEg1V0Pa6mznUxGU0R+3H5PIF6NULr0yPCAVLKqJro93Bbr19jSE18BMfyjN4osWDI4sm92m0kw==}
+    engines: {node: '>=8.0.0'}
+    dev: false
 
   /get-caller-file@2.0.5:
     resolution: {integrity: sha512-DyFP3BM/3YHTQOCUL/w0OZHR0lpKeGrxotcHWcqNEdnltqFwXVfhEBQ94eIo34AfQpo0rGki4cyIiftY06h2Fg==}

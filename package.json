@@ -18,6 +18,8 @@
     "@radix-ui/react-toast": "^1.1.5",
     "@radix-ui/react-toggle-group": "^1.0.4",
     "@sentry/nextjs": "^7.77.0",
+    "@types/geodesy": "^2.2.7",
+    "geodesy": "^2.4.0",
     "graphql": "^16.8.1",
     "hmkit": "^13.2.0",
     "jsonwebtoken": "^9.0.2",

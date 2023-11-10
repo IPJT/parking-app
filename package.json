@@ -28,6 +28,7 @@
     "react-dom": "18.2.0",
     "react-hook-form": "^7.47.0",
     "styled-components": "^6.1.0",
+    "twilio": "^4.19.0",
     "uuid": "^9.0.1"
   },
   "devDependencies": {
